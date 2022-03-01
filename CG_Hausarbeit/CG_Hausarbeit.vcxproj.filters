@@ -9,14 +9,164 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Ressourcendateien">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Quelldateien\utils">
+      <UniqueIdentifier>{9d82fc8b-fca2-4a8d-ad65-099819a299e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\utils\models">
+      <UniqueIdentifier>{35b1aa8e-8e7c-41d0-8dbb-d8a041d67126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\utils\shader">
+      <UniqueIdentifier>{995a5ebc-7025-4d11-afd2-77caf672a8b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\utils\yourclasses">
+      <UniqueIdentifier>{cda48e18-3679-496b-9ac2-eefa2a99c372}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CG_Hausarbeit.cpp">
+    <ClCompile Include="..\src\Application.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Terrain.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TerrainShader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Camera.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\IndexBuffer.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Matrix.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Texture.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\VertexBuffer.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Aabb.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BaseModel.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LineBoxModel.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LinePlaneModel.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Model.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TriangleBoxModel.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TrianglePlaneModel.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TriangleSphereModel.cpp">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BaseShader.cpp">
+      <Filter>Quelldateien\utils\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ConstantShader.cpp">
+      <Filter>Quelldateien\utils\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PhongShader.cpp">
+      <Filter>Quelldateien\utils\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\color.cpp">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\rgbimage.cpp">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vector.cpp">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Application.h">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Terrain.h">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TerrainShader.h">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Camera.h">
+      <Filter>Quelldateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IndexBuffer.h">
+      <Filter>Quelldateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Matrix.h">
+      <Filter>Quelldateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Texture.h">
+      <Filter>Quelldateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\VertexBuffer.h">
+      <Filter>Quelldateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Aabb.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BaseModel.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LineBoxModel.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LinePlaneModel.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Model.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TriangleBoxModel.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TrianglePlaneModel.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TriangleSphereModel.h">
+      <Filter>Quelldateien\utils\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BaseShader.h">
+      <Filter>Quelldateien\utils\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ConstantShader.h">
+      <Filter>Quelldateien\utils\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PhongShader.h">
+      <Filter>Quelldateien\utils\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\color.h">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\rgbimage.h">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vector.h">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\fsterrain.glsl">
+      <Filter>Quelldateien</Filter>
+    </None>
+    <None Include="..\assets\vsterrain.glsl">
+      <Filter>Quelldateien</Filter>
+    </None>
   </ItemGroup>
 </Project>
