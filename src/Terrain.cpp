@@ -4,7 +4,7 @@
 #include "LinePlaneModel.h"
 #include "Model.h"
 
-Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(10,1,10)
+Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(14.3,6,14.3)
 {
     if(HeightMap && DetailMap1 && DetailMap2)
     {
@@ -100,8 +100,8 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
 			//Texturkoordinaten für Heightmap hinzufügen
             this->VB.addTexcoord0(row / (float)imgWidth - 1, col / (float)imgHeight - 1);
 
-			//Faktor 150 beschreibt die Wiederholung der Gras-Textur auf der Ebene
-            this->VB.addTexcoord1(row / ((float)imgWidth - 1) * 150, col / ((float)imgHeight - 1) * 150);
+			//Faktor beschreibt die Wiederholung der Gras-Textur auf der Ebene
+            this->VB.addTexcoord1(row / ((float)imgWidth - 1) * 1000, col / ((float)imgHeight - 1) * 1000);
 
             this->VB.addVertex(vertices[x][y]);
             

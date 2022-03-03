@@ -12,8 +12,8 @@
 TrianglePlaneModel::TrianglePlaneModel( float DimX, float DimZ, int NumSegX, int NumSegZ )
 {
     ++NumSegX; ++NumSegZ;
-    float startx = DimX*-0.5f;
-    float startz = DimZ*-0.5f;
+	float startx = DimX*-0.5f;
+	float startz = DimZ*-0.5f;
     float stepx = DimX/(float)(NumSegX-1);
     float stepz = DimZ/(float)(NumSegZ-1);
 

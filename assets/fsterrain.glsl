@@ -14,12 +14,11 @@ uniform vec3 Scaling;
 in vec3 Position;
 in vec3 Normal;
 in vec2 Texcoord0;
-//Exercise 3
+
 in vec2 Texcoord1;
 
 out vec4 FragColor;
 
-//Zusatzaufgabe 4
 //Visualisierung: https://thebookofshaders.com/glossary/?search=clamp
 //Formel für Nebel aus dem Aufgabenblatt, Werte und Color-Berechnung in der main unten
 float sat(in float a)
@@ -44,7 +43,6 @@ void main()
     vec3 SpecularComponent = LightColor * SpecularColor * pow( sat(dot(R,E)), SpecularExp);
 
    
-    // Exercise 3
 	//https://forum.openframeworks.cc/t/what-does-the-texture-function-in-glsl-do/21196
 	//https://thebookofshaders.com/glossary/?search=mix
     vec4 color;
@@ -56,9 +54,9 @@ void main()
     //Mixe zusammen
     color = mix(GrassTexture, RockTexture, MixTextureVec);
    
-    //Zusatzaufgabe 4
+    //Nebel
     float s = sat(3);
-    vec3 colorFogCalc = vec3(0.95, 0.95, 1);
+    vec3 colorFogCalc = vec3(0.40, 0.40, 0.45); //Farbe für sunset skybox
     vec4 colorFog = vec4(colorFogCalc.rgb, 1);
     vec4 newColorFog = (1-s)*color+(s*colorFog);    
 

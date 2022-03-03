@@ -83,8 +83,6 @@ void Model::loadMeshes(const aiScene* pScene, bool FitSize)
     float scale = 1;
    
 
-    // warum durch 2 nochmal ????????????????????????????
-    //max minus min nehmen eigentlich
     if (FitSize) {
         Vector bBMax = BoundingBox.Max;
         Vector bBMin = BoundingBox.Min;

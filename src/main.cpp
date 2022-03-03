@@ -33,7 +33,7 @@ int main () {
     const int WindowHeight = 600;
     
     //Create window
-    GLFWwindow* window = glfwCreateWindow (WindowWidth, WindowHeight, "Computergrafik - Hochschule Osnabrück", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow (WindowWidth, WindowHeight, "Computergrafik - Hausarbeit", NULL, NULL);
     if (!window) {
         fprintf (stderr, "ERROR: can not open window with GLFW3\n");
         glfwTerminate();
