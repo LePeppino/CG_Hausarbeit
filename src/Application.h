@@ -18,6 +18,7 @@
 #include "indexbuffer.h"
 #include "basemodel.h"
 #include "terrain.h"
+#include "Tank.h"
 
 class Application
 {
@@ -29,11 +30,21 @@ public:
     void draw();
     void end();
 
+	void keyPress(float&, float &);
+	float toRadian(float degrees);
+
 protected:
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
     Terrain* pTerrain;
+
+	Vector calc3DRay(float x, float y, Vector& Pos);
+	Tank* pTank;
+	Model* pTankTop;
+	Model* pTankBot;
+	float fb, lr;
+	double mx, my;
     float oldXPosition,oldYPosition;
 };
 

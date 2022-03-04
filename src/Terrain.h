@@ -21,6 +21,8 @@ public:
     float height() const { return Size.Y; }
     float depth() const { return Size.Z; }
 
+	float getHeightForCords(int x, int z);
+
     void width(float v) { Size.X = v; }
     void height(float v) { Size.Y = v; }
     void depth(float v) { Size.Z = v; }
@@ -29,16 +31,19 @@ public:
     
     const Vector& size() const { return Size; }
     void size(const Vector& s) { Size = s; }
+	
+	float getHeight(int x, int y);
+
 protected:
     void applyShaderParameter();
-    
+	float *terrainHeights = (float *)malloc(2000 * 2000 * (sizeof(float)));
     VertexBuffer VB;
     IndexBuffer IB;
     Texture DetailTex[4];
     Texture MixTex;
     Texture HeightTex;
     Vector Size;
-    
+	float heights[2000][2000];
 };
 
 

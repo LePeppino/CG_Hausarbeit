@@ -34,6 +34,7 @@
     <ClCompile Include="..\src\Model.cpp" />
     <ClCompile Include="..\src\PhongShader.cpp" />
     <ClCompile Include="..\src\rgbimage.cpp" />
+    <ClCompile Include="..\src\Tank.cpp" />
     <ClCompile Include="..\src\Terrain.cpp" />
     <ClCompile Include="..\src\TerrainShader.cpp" />
     <ClCompile Include="..\src\Texture.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\src\Model.h" />
     <ClInclude Include="..\src\PhongShader.h" />
     <ClInclude Include="..\src\rgbimage.h" />
+    <ClInclude Include="..\src\Tank.h" />
     <ClInclude Include="..\src\Terrain.h" />
     <ClInclude Include="..\src\TerrainShader.h" />
     <ClInclude Include="..\src\Texture.h" />

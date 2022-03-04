@@ -37,7 +37,8 @@
 Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
 {
     BaseModel* pModel;
-    
+	PhongShader* pPhongShader;
+
     // create LineGrid model with constant color shader
     pModel = new LinePlaneModel(10, 10, 10, 10);
     ConstantShader* pConstShader = new ConstantShader();
@@ -53,9 +54,9 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     const RGBImage* src = t.getRGBImage();
 
 	//MixMap generieren (muss man nur einmal machen)
-    /*RGBImage dst(src->width(), src->height());
+    RGBImage dst(src->width(), src->height());
     RGBImage::SobelFilter(dst, *src, 10.f);
-    dst.saveToDisk(ASSET_DIRECTORY "mixmap_sobel.bmp");*/
+    dst.saveToDisk(ASSET_DIRECTORY "mixmap_sobel.bmp");
 
     // Exercise 1
     pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
@@ -68,12 +69,20 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     pTerrain->shader(pTerrainShader, true);
     pTerrain->load(ASSET_DIRECTORY "heightmap.bmp", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY"sand2.jpg", ASSET_DIRECTORY"snow2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
     //Größe ist im Nachhinein anpassbar, optional
+	
 	/*pTerrain->width(10);
     pTerrain->depth(10);
-    pTerrain->height(1);*/
+    pTerrain->height(3);
+	*/
     Models.push_back(pTerrain);
+	
+	pPhongShader = new PhongShader;
+	pTank = new Tank();
+	pTank->shader(pPhongShader, true);
+	pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
 
-    
+	Models.push_back(pTank);
+	
 }
 void Application::start()
 {
@@ -92,6 +101,7 @@ void Application::update(float dtime)
     // Exercise 1
     // Beim Drücken der S-Taste kann das Terrain per Mausbewegung skaliert werden
 	// Die Cam bleibt dabei still
+	/*
     if (glfwGetKey(this->pWindow, GLFW_KEY_S) == GLFW_PRESS) {
 
         double diffY = (newYPosition - this->oldYPosition) * 0.05;
@@ -111,6 +121,96 @@ void Application::update(float dtime)
 
         Cam.update();
     }
+	*/
+	this->oldYPosition = newYPosition;
+	this->oldXPosition = newXPosition;
+
+	Vector pos;
+
+	glfwGetCursorPos(pWindow, &mx, &my);
+	Vector collision = Application::calc3DRay(mx, my, pos);
+	pTank->aim(collision);
+	keyPress(fb, lr);
+	pTank->steer(fb, lr);
+	fb = 0;
+	lr = 0;
+	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);
+	//Cam.update();
+	
+}
+
+void Application::keyPress(float &fb, float &lr) {
+
+
+	if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS) {
+		fb = -1;
+	}
+	if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS) {
+		fb = 1;
+	}
+
+
+	if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS) {
+		lr = -1;
+	}
+
+	if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS) {
+		lr = 1;
+	}
+
+
+}
+
+float Application::toRadian(float degrees) {
+
+	return (float)degrees * M_PI / 180;
+
+}
+
+Vector Application::calc3DRay(float x, float y, Vector& Pos)
+{
+	//normalisierte Koordinaten berechnen
+	int windowWidthHalf = 0;
+	int windowHeightHalf = 0;
+	glfwGetWindowSize(this->pWindow, &windowWidthHalf, &windowHeightHalf);
+	windowHeightHalf /= 2;
+	windowWidthHalf /= 2;
+
+	//Feld auf -1 bis 1 normalisieren
+	float xNormal, yNormal;
+	xNormal = (x - windowWidthHalf) / windowWidthHalf;
+	yNormal = -(y - windowHeightHalf) / windowHeightHalf;
+
+	//Richtungsvector(Kamararaum) erzeugen mit inverser Projektionsmatrix
+	Matrix projectionCam = this->Cam.getProjectionMatrix();
+	Vector normalCursor(xNormal, yNormal, 0);
+	Vector direction = projectionCam.invert() * normalCursor;
+
+	//Umwandlung des Richtungsvectors in den Weltraum
+	Matrix viewMatrix = this->Cam.getViewMatrix();
+	Vector directionInWeltraum = viewMatrix.invert().transformVec3x3(direction);
+
+	//Schnittpunkt mit der Ebene y=0 bestimmen
+	Vector camPos = this->Cam.position();
+	directionInWeltraum.normalize();
+	float s;
+	camPos.triangleIntersection(directionInWeltraum, Vector(0, 0, 1), Vector(0, 0, 0), Vector(1, 0, 0), s);
+
+	//falls directionWolrld von der Ebene weg zeigt (0,0,0) zurückgeben
+	if (s < 0) {
+		return Vector(0, 0, 0);
+	}
+
+	//Vektor zum Punkt auf der Ebene y=0 berechnen
+	Vector positionOnGround = camPos + directionInWeltraum * s;
+
+	//float Ungenauigkeiten umgehen indem der Vektor erneut auf y = 0 gesetzt wird
+	return Vector(positionOnGround.X, 0, positionOnGround.Z);
+
+
+	// Pos:Ray Origin
+	// return:Ray Direction
+
 }
 
 void Application::draw()

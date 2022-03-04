@@ -4,7 +4,10 @@
 #include "LinePlaneModel.h"
 #include "Model.h"
 
-Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(10,1,10)
+static int imgWidth = NULL;
+static int imgHeight = NULL;
+
+Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(10,7,10)
 {
     if(HeightMap && DetailMap1 && DetailMap2)
     {
@@ -44,8 +47,8 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
     const RGBImage* tmp = HeightTex.getRGBImage();
 
     //Faktor berechnen um die reale Bildgröße in die gewünschte Terraingröße umrechnen zu können
-    int imgWidth = tmp->width();
-    int imgHeight = tmp->height();
+	imgWidth = tmp->width();
+	imgHeight = tmp->height();
 
 	//Skalierungsverhältnis zwischen Maße der Ebene und Pixelmaße des Bildes
     float widthScale = this->Size.X / imgWidth;
@@ -56,7 +59,6 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
     for (int i = 0; i < imgWidth + 2; ++i) {
         vertices[i] = new Vector[imgHeight + 2];
     }
-
     for (int col = 0; col < imgHeight; col++) {
         for (int row = 0; row < imgWidth; row++) {
             //Grauwert für HeightMap bestimmen
@@ -69,6 +71,9 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
 
             //Vertex zum Buffer hinzufügen
             vertices[col + 1][row + 1] = Vector(pixelX, pixelY, pixelZ);
+			terrainHeights[col * imgWidth + row] = pixelY;
+			heights[col][row] = pixelY;
+
         }
     }
 
@@ -172,4 +177,25 @@ void Terrain::applyShaderParameter()
     
     
     // TODO: add additional parameters if needed..
+}
+
+float Terrain::getHeightForCords(int x, int z) {
+	int xt, zt;
+	if (terrainHeights == NULL) {
+		return(0.0);
+	}
+	xt = x + imgWidth / 2;
+	zt = imgWidth - (z + imgHeight / 2);
+
+	if ((xt > imgWidth) || (zt > imgHeight) || (xt < 0) || (zt < 0)) {
+		return(0.0);
+	}
+	return (terrainHeights[zt * imgWidth + xt]);
+}
+
+float Terrain::getHeight(int x, int y) {
+	if (heights != NULL) {
+		return heights[x][y];
+	}
+	return 0.0;
 }
