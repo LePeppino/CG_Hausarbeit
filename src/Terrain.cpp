@@ -4,7 +4,7 @@
 #include "LinePlaneModel.h"
 #include "Model.h"
 
-Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(14.3,6,14.3)
+Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(20, 10, 20) //Size(14.3,6,14.3)
 {
     if(HeightMap && DetailMap1 && DetailMap2)
     {
@@ -69,6 +69,10 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
 
             //Vertex zum Buffer hinzufügen
             vertices[col + 1][row + 1] = Vector(pixelX, pixelY, pixelZ);
+			
+			//Höhenwerte für Kollisionen hinzufügen
+			heights[col][row] = pixelY;
+
         }
     }
 
@@ -137,6 +141,13 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
     this->IB.end();
 
     return true;
+}
+
+float Terrain::getHeightAtPoint(int x, int z) {
+	if (heights != NULL) {
+		return heights[x][z];
+	}
+	return 0;
 }
 
 void Terrain::shader( BaseShader* shader, bool deleteOnDestruction )

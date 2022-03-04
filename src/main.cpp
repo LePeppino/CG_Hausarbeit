@@ -29,8 +29,8 @@ int main () {
 #endif
     
     //window Size
-    const int WindowWidth = 800;
-    const int WindowHeight = 600;
+    const int WindowWidth = 1280;
+    const int WindowHeight = 720;
     
     //Create window
     GLFWwindow* window = glfwCreateWindow (WindowWidth, WindowHeight, "Computergrafik - Hausarbeit", NULL, NULL);

@@ -47,12 +47,12 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);*/
 
 	//Meeresspiegel als PlaneModel
-	pModel = new TrianglePlaneModel(200, 200, 100, 100);
+	pModel = new TrianglePlaneModel(601, 601, 100, 100);
 	TerrainShader* pWaterShader = new TerrainShader(ASSET_DIRECTORY);
 	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
 	pModel->shader(pWaterShader, true);
 	Matrix waterMatrix;
-	waterMatrix.translation(0, 2, 0);
+	waterMatrix.translation(0, 1, 0);
 	pModel->transform(waterMatrix);
 	Models.push_back(pModel);
 
@@ -62,14 +62,22 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     t.load(file);
     const RGBImage* src = t.getRGBImage();
 
-	//MixMap generieren (muss man nur einmal machen)
+	//MixMap generieren
     RGBImage dst(src->width(), src->height());
     RGBImage::SobelFilter(dst, *src, 10.f);
     dst.saveToDisk(ASSET_DIRECTORY "mixmap_sobel.bmp");
 
-    //Skybox generieren
+    //Skybox generieren und ausrichten
     pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
     pModel->shader(new PhongShader(), true);
+
+	Matrix skyboxMatrix, skyboxScale, skyboxTrans;
+	pModel->transform();
+	skyboxScale.scale(3);
+	skyboxTrans.translation(0, 5, 0);
+	skyboxMatrix = skyboxScale * skyboxTrans;
+	pModel->transform(skyboxMatrix);
+
     Models.push_back(pModel);
    
 	//Terrain generieren
@@ -95,7 +103,7 @@ void Application::update(float dtime)
 {
     double newYPosition, newXPosition;
     glfwGetCursorPos(this->pWindow, &newXPosition, &newYPosition);
-    // Exercise 1
+
     // Beim Drücken der S-Taste kann das Terrain per Mausbewegung skaliert werden
 	// Die Cam bleibt dabei still
     //if (glfwGetKey(this->pWindow, GLFW_KEY_S) == GLFW_PRESS) {
@@ -119,6 +127,7 @@ void Application::update(float dtime)
 
     //    
     //}
+
 	Cam.update();
 }
 

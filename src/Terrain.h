@@ -29,6 +29,8 @@ public:
     
     const Vector& size() const { return Size; }
     void size(const Vector& s) { Size = s; }
+
+	float getHeightAtPoint(int x, int z);
 protected:
     void applyShaderParameter();
     
@@ -38,6 +40,7 @@ protected:
     Texture MixTex;
     Texture HeightTex;
     Vector Size;
+	float heights[2000][2000];
     
 };
 

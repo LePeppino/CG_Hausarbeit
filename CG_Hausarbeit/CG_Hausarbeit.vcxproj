@@ -68,6 +68,8 @@
     <ClInclude Include="..\src\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Online Resources\HA-Computergrafik-main\assets\fsphong.glsl" />
+    <None Include="..\..\Online Resources\HA-Computergrafik-main\assets\vsphong.glsl" />
     <None Include="..\assets\fsterrain.glsl" />
     <None Include="..\assets\vsterrain.glsl" />
   </ItemGroup>

@@ -7,7 +7,13 @@
 //
 
 #include "PhongShader.h"
+#include <string>
 
+#ifdef WIN32
+#define ASSET_DIRECTORY "../assets/"
+#else
+#define ASSET_DIRECTORY "assets/"
+#endif
 
 
 const char *VertexShaderCode =
@@ -61,7 +67,7 @@ const char *FragmentShaderCode =
 "}";
 
 PhongShader::PhongShader(bool LoadStaticShaderCode) :
- DiffuseColor(0.8f,0.8f,0.8f),
+ DiffuseColor(0.5f,0.5f,0.5f),
  SpecularColor(0.5f,0.5f,0.5f),
  AmbientColor(0.2f,0.2f,0.2f),
  SpecularExp(20.0f),
@@ -70,9 +76,15 @@ PhongShader::PhongShader(bool LoadStaticShaderCode) :
  DiffuseTexture(Texture::defaultTex()),
  UpdateState(0xFFFFFFFF)
 {
-    if(!LoadStaticShaderCode)
-        return;
-    ShaderProgram = createShaderProgram(VertexShaderCode, FragmentShaderCode);
+	if (!LoadStaticShaderCode) {
+		return;
+	}
+
+	ShaderProgram = createShaderProgram(VertexShaderCode, FragmentShaderCode);
+	/*bool loaded = load(ASSET_DIRECTORY "vsphong.glsl", ASSET_DIRECTORY "fsphong.glsl");
+	if (!loaded) {
+		throw std::exception();
+	}*/
     assignLocations();
 }
 void PhongShader::assignLocations()
