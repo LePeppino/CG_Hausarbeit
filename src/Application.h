@@ -31,7 +31,7 @@ public:
     void end();
 	void createScene();
 
-	void keyPress(float&, float &);
+	void keyPress(float&, float&, float dtime);
 
 protected:
     Camera Cam;
@@ -42,7 +42,10 @@ protected:
 	Tank* pTank;
 	Model* pTankTop;
 	Model* pTankBot;
-	float fb, lr;
+	float fb = 0;
+	float lr = 0;
+	float moveVel = 0;
+	float turnVel = 0;
 	double mx, my;
     float oldXPosition,oldYPosition;
 };

@@ -51,7 +51,7 @@ void Tank::steer( float ForwardBackward, float LeftRight)
 
 void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 {
-	Matrix chassisMatrix, chassisMov, chassisRot, chassisPitch, chassisRoll, chassisUrsprung;
+	Matrix chassisMatrix, chassisMov, chassisTurn, chassisPitch, chassisRoll, chassisUrsprung;
 	Matrix cannonMatrix;
 	//chassis
 	chassisUrsprung = chassis->transform();
@@ -66,20 +66,21 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 	try {
 
 		// Während Spieler über Terrain fliegt
-		while (planePos.Y > heightForCords * TERRAIN_HEIGHT)
+		if (planePos.Y > heightForCords * TERRAIN_HEIGHT)
 		{
 
 			//https://www.youtube.com/watch?v=RpNPW89Y-3A
 
 			//TODO: Leichte Bewegung nach links/rechts beim Neigen
-			chassisPitch.rotationZ(-1 * fb.X *dtime);
+			chassisPitch.rotationZ(-1 * fb.X * dtime);
 
 			chassisRoll.rotationX(-1 * fb.Y * dtime);
 			
+			chassisTurn.rotationY(0.2 * fb.Y * dtime);
 
 			chassisMov.translation(0.1, 0, 0);
 
-			chassisMatrix = chassisUrsprung * chassisPitch * chassisRoll * chassisMov;
+			chassisMatrix = chassisUrsprung * chassisPitch * chassisRoll * chassisTurn * chassisMov;
 			this->chassis->transform(chassisMatrix);
 
 			cannonMatrix = chassisUrsprung;
@@ -91,6 +92,11 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 			thirdPerson.lookAt(target, chassisMatrix.up(), chassisMatrix.translation() - chassisMatrix.right() * 7 + chassisMatrix.up() * 2);
 			cam.setViewMatrix(thirdPerson);
 			cam.setPosition(target); //for fog shaders
+		}
+		else 
+		{
+			//Kollision --> Feedback & neu starten
+
 		}
 	}
 	catch (...) {
