@@ -104,7 +104,7 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
             this->VB.addTexcoord0(row / (float)imageSize - 1, col / (float)imageSize - 1);
 
 			//Faktor beschreibt die Wiederholung der Gras-Textur auf der Ebene
-            this->VB.addTexcoord1(row / ((float)imgWidth - 1) * 1000, col / ((float)imgHeight - 1) * 1000);
+            this->VB.addTexcoord1(row / ((float)imageSize - 1) * 1000, col / ((float)imageSize - 1) * 1000);
 
             this->VB.addVertex(vertices[x][y]);
             
@@ -140,13 +140,6 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
     this->IB.end();
 
     return true;
-}
-
-float Terrain::getHeightAtPoint(int x, int z) {
-	if (heights != NULL) {
-		return heights[x][z];
-	}
-	return 0;
 }
 
 void Terrain::shader( BaseShader* shader, bool deleteOnDestruction )

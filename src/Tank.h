@@ -21,7 +21,6 @@ public:
     virtual ~Tank();
     bool loadModels(const char* ChassisFile, const char* CannonFile);
     void steer( float ForwardBackward, float LeftRight);
-    void aim( const Vector& Target );
     void update(float dtime, Vector size, Terrain *terrain, Camera& cam);
     virtual void draw(const BaseCamera& Cam);
 protected:

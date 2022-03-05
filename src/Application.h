@@ -32,7 +32,6 @@ public:
 	void createScene();
 
 	void keyPress(float&, float &);
-	float toRadian(float degrees);
 
 protected:
     Camera Cam;
@@ -40,7 +39,6 @@ protected:
     GLFWwindow* pWindow;
     Terrain* pTerrain;
 
-	Vector calc3DRay(float x, float y, Vector& Pos);
 	Tank* pTank;
 	Model* pTankTop;
 	Model* pTankBot;
