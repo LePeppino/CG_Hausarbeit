@@ -86,6 +86,10 @@ PhongShader::PhongShader(bool LoadStaticShaderCode) :
 	if (!LoadStaticShaderCode) {
 		return;
 	}
+	/*bool loaded = load(ASSET_DIRECTORY"vsphong.glsl", ASSET_DIRECTORY"fsphong.glsl");
+	if (!loaded) {
+		throw std::exception();
+	}*/
 
 	ShaderProgram = createShaderProgram(VertexShaderCode, FragmentShaderCode);
     assignLocations();

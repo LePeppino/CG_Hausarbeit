@@ -37,57 +37,12 @@
 
 Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
 {
-    BaseModel* pModel;
-
-    // create LineGrid model with constant color shader
-    /*pModel = new LinePlaneModel(10, 10, 10, 10);
-    ConstantShader* pConstShader = new ConstantShader();
-	pConstShader->color(Color(0,1,0));
-    pModel->shader(pConstShader, true);
-    // add to render list
-    Models.push_back(pModel);*/
-
-    //Map generieren aus Heightmap
-    const char* file = ASSET_DIRECTORY "heightmap_iceland.png";
-    Texture t;
-    t.load(file);
-    const RGBImage* src = t.getRGBImage();
-
-	//MixMap generieren
-    RGBImage dst(src->width(), src->height());
-    RGBImage::SobelFilter(dst, *src, 10.f);
-    dst.saveToDisk(ASSET_DIRECTORY "mixmap_sobel.bmp");
-
-    //Skybox generieren und ausrichten
-    pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
-    pModel->shader(new PhongShader(), true);
-	Matrix skyboxMatrix, skyboxScale, skyboxTrans;
-	pModel->transform();
-	skyboxScale.scale(3);
-	skyboxTrans.translation(0, 5, 0);
-	skyboxMatrix = skyboxScale * skyboxTrans;
-	pModel->transform(skyboxMatrix);
-    Models.push_back(pModel);
-   
-	//Terrain generieren
-    pTerrain = new Terrain();
-    TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
-    pTerrainShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "grass2.bmp"));
-    pTerrain->shader(pTerrainShader, true);
-    pTerrain->load(ASSET_DIRECTORY "heightmap_iceland.png", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY"sand2.jpg", ASSET_DIRECTORY"snow2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
-    Models.push_back(pTerrain);
-    
-	//Meeresspiegel als PlaneModel
-	//Nach dem Terrain rendern, um Transparenz sichtbar zu machen!
-	pModel = new TrianglePlaneModel(601, 601, 100, 100, true);
-	WaterShader* pWaterShader = new WaterShader(ASSET_DIRECTORY);
-	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
-	pModel->shader(pWaterShader, true);
-	Matrix waterMatrix;
-	waterMatrix.translation(0, 5, 0);
-	pModel->transform(waterMatrix);
-	Models.push_back(pModel);
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(pWindow, &windowWidth, &windowHeight); //für PostFX
+	createScene();
+	//TODO PostFX?
 }
+
 void Application::start()
 {
     glEnable (GL_DEPTH_TEST); // enable depth-testing
@@ -102,31 +57,6 @@ void Application::update(float dtime)
 {
     double newYPosition, newXPosition;
     glfwGetCursorPos(this->pWindow, &newXPosition, &newYPosition);
-
-	// Nicht für das Projekt benötigt, kann später weg
-    // Beim Drücken der S-Taste kann das Terrain per Mausbewegung skaliert werden
-	// Die Cam bleibt dabei still
-    //if (glfwGetKey(this->pWindow, GLFW_KEY_S) == GLFW_PRESS) {
-
-		
-    //    double diffY = (newYPosition - this->oldYPosition) * 0.05;
-    //    double diffX = (newXPosition - this->oldXPosition) * 0.05;
-
-    //    //Neu setzen 
-    //    pTerrain->height(pTerrain->height() - diffY);
-    //    pTerrain->width(pTerrain->width() + diffX);
-    //    pTerrain->depth(pTerrain->depth() + diffX);
-
-    //    this->oldYPosition = newYPosition;
-    //    this->oldXPosition = newXPosition;
-		
-    //}
-    //else {
-    //    this->oldYPosition = newYPosition;
-    //    this->oldXPosition = newXPosition;
-
-    //    
-    //}
 
 	Cam.update();
 }
@@ -146,10 +76,58 @@ void Application::draw()
     GLenum Error = glGetError();
     assert(Error==0);
 }
+
 void Application::end()
 {
     for( ModelList::iterator it = Models.begin(); it != Models.end(); ++it )
         delete *it;
     
     Models.clear();
+}
+
+void Application::createScene() 
+{
+	BaseModel* pModel;
+
+	//Map generieren aus Heightmap
+	const char* file = ASSET_DIRECTORY "heightmap_iceland.png";
+	Texture t;
+	t.load(file);
+	const RGBImage* src = t.getRGBImage();
+
+	//MixMap generieren
+	RGBImage dst(src->width(), src->height());
+	RGBImage::SobelFilter(dst, *src, 10.f);
+	dst.saveToDisk(ASSET_DIRECTORY "mixmap_sobel.bmp");
+
+	//Skybox generieren und ausrichten
+	pModel = new Model(ASSET_DIRECTORY "skybox.obj", true);
+	pModel->shader(new PhongShader(), true);
+	Matrix skyboxMatrix, skyboxScale, skyboxTrans;
+	pModel->transform();
+	skyboxScale.scale(3);
+	skyboxTrans.translation(0, 5, 0);
+	skyboxMatrix = skyboxScale * skyboxTrans;
+	pModel->transform(skyboxMatrix);
+	Models.push_back(pModel);
+
+	//Terrain generieren
+	pTerrain = new Terrain();
+	TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
+	pTerrainShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "grass2.bmp"));
+	pTerrain->shader(pTerrainShader, true);
+	//TODO: DetailTexes aussortieren!
+	pTerrain->load(ASSET_DIRECTORY "heightmap_iceland.png", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY"sand2.jpg", ASSET_DIRECTORY"snow2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
+	Models.push_back(pTerrain);
+
+	//Meeresspiegel als PlaneModel
+	//Nach dem Terrain rendern, um Transparenz sichtbar zu machen!
+	pModel = new TrianglePlaneModel(601, 601, 100, 100, true);
+	WaterShader* pWaterShader = new WaterShader(ASSET_DIRECTORY);
+	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
+	pModel->shader(pWaterShader, true);
+	Matrix waterMatrix;
+	waterMatrix.translation(0, 5, 0);
+	pModel->transform(waterMatrix);
+	Models.push_back(pModel);
 }

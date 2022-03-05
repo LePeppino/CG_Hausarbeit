@@ -174,16 +174,16 @@
     <None Include="..\assets\vsterrain.glsl">
       <Filter>Quelldateien</Filter>
     </None>
-    <None Include="..\..\Online Resources\HA-Computergrafik-main\assets\vsphong.glsl">
-      <Filter>Quelldateien</Filter>
-    </None>
-    <None Include="..\..\Online Resources\HA-Computergrafik-main\assets\fsphong.glsl">
-      <Filter>Quelldateien</Filter>
-    </None>
     <None Include="..\assets\fswater.glsl">
       <Filter>Quelldateien</Filter>
     </None>
     <None Include="..\assets\vswater.glsl">
+      <Filter>Quelldateien</Filter>
+    </None>
+    <None Include="..\assets\fsphong.glsl">
+      <Filter>Quelldateien</Filter>
+    </None>
+    <None Include="..\assets\vsphong.glsl">
       <Filter>Quelldateien</Filter>
     </None>
   </ItemGroup>

@@ -28,6 +28,7 @@ public:
     void update(float dtime);
     void draw();
     void end();
+	void createScene();
 
 protected:
     Camera Cam;

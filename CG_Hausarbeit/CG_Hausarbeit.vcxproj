@@ -70,10 +70,10 @@
     <ClInclude Include="..\src\WaterShader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Online Resources\HA-Computergrafik-main\assets\fsphong.glsl" />
-    <None Include="..\..\Online Resources\HA-Computergrafik-main\assets\vsphong.glsl" />
+    <None Include="..\assets\fsphong.glsl" />
     <None Include="..\assets\fsterrain.glsl" />
     <None Include="..\assets\fswater.glsl" />
+    <None Include="..\assets\vsphong.glsl" />
     <None Include="..\assets\vsterrain.glsl" />
     <None Include="..\assets\vswater.glsl" />
   </ItemGroup>
