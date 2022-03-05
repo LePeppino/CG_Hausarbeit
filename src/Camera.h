@@ -49,6 +49,7 @@ public:
     
     virtual void update();
     virtual const Matrix& getViewMatrix() const;
+	void setViewMatrix(const Matrix& matrix) { m_ViewMatrix = matrix; }
     virtual const Matrix& getProjectionMatrix() const;
 protected:
     void updateMouseInput();

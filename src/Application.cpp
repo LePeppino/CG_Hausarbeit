@@ -58,7 +58,104 @@ void Application::update(float dtime)
     double newYPosition, newXPosition;
     glfwGetCursorPos(this->pWindow, &newXPosition, &newYPosition);
 
-	Cam.update();
+        this->oldYPosition = newYPosition;
+        this->oldXPosition = newXPosition;
+    }
+    else {
+        this->oldYPosition = newYPosition;
+        this->oldXPosition = newXPosition;
+
+        Cam.update();
+    }
+	*/
+	this->oldYPosition = newYPosition;
+	this->oldXPosition = newXPosition;
+
+	Vector pos;
+
+	glfwGetCursorPos(pWindow, &mx, &my);
+	Vector collision = Application::calc3DRay(mx, my, pos);
+	pTank->aim(collision);
+	keyPress(fb, lr);
+	pTank->steer(fb, lr);
+	fb = 0;
+	lr = 0;
+	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);
+	
+}
+
+void Application::keyPress(float &fb, float &lr) {
+
+
+	if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS) {
+		fb = -1;
+	}
+	if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS) {
+		fb = 1;
+	}
+
+
+	if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS) {
+		lr = -1;
+	}
+
+	if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS) {
+		lr = 1;
+	}
+
+
+}
+
+float Application::toRadian(float degrees) {
+
+	return (float)degrees * M_PI / 180;
+
+}
+
+Vector Application::calc3DRay(float x, float y, Vector& Pos)
+{
+	//normalisierte Koordinaten berechnen
+	int windowWidthHalf = 0;
+	int windowHeightHalf = 0;
+	glfwGetWindowSize(this->pWindow, &windowWidthHalf, &windowHeightHalf);
+	windowHeightHalf /= 2;
+	windowWidthHalf /= 2;
+
+	//Feld auf -1 bis 1 normalisieren
+	float xNormal, yNormal;
+	xNormal = (x - windowWidthHalf) / windowWidthHalf;
+	yNormal = -(y - windowHeightHalf) / windowHeightHalf;
+
+	//Richtungsvector(Kamararaum) erzeugen mit inverser Projektionsmatrix
+	Matrix projectionCam = this->Cam.getProjectionMatrix();
+	Vector normalCursor(xNormal, yNormal, 0);
+	Vector direction = projectionCam.invert() * normalCursor;
+
+	//Umwandlung des Richtungsvectors in den Weltraum
+	Matrix viewMatrix = this->Cam.getViewMatrix();
+	Vector directionInWeltraum = viewMatrix.invert().transformVec3x3(direction);
+
+	//Schnittpunkt mit der Ebene y=0 bestimmen
+	Vector camPos = this->Cam.position();
+	directionInWeltraum.normalize();
+	float s;
+	camPos.triangleIntersection(directionInWeltraum, Vector(0, 0, 1), Vector(0, 0, 0), Vector(1, 0, 0), s);
+
+	//falls directionWolrld von der Ebene weg zeigt (0,0,0) zurückgeben
+	if (s < 0) {
+		return Vector(0, 0, 0);
+	}
+
+	//Vektor zum Punkt auf der Ebene y=0 berechnen
+	Vector positionOnGround = camPos + directionInWeltraum * s;
+
+	//float Ungenauigkeiten umgehen indem der Vektor erneut auf y = 0 gesetzt wird
+	return Vector(positionOnGround.X, 0, positionOnGround.Z);
+
+
+	// Pos:Ray Origin
+	// return:Ray Direction
+
 }
 
 void Application::draw()

@@ -92,6 +92,9 @@
     <ClCompile Include="..\src\vector.cpp">
       <Filter>Quelldateien\utils\yourclasses</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Tank.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\WaterShader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -162,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="..\src\vector.h">
       <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Tank.h">
+      <Filter>Quelldateien\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\src\WaterShader.h">
       <Filter>Quelldateien</Filter>

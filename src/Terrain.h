@@ -29,19 +29,17 @@ public:
     
     const Vector& size() const { return Size; }
     void size(const Vector& s) { Size = s; }
-
-	float getHeightAtPoint(int x, int z);
+	int getImageSize() { return imageSize; }
+	float heights[2000][2000];
 protected:
     void applyShaderParameter();
-    
     VertexBuffer VB;
     IndexBuffer IB;
     Texture DetailTex[4];
     Texture MixTex;
     Texture HeightTex;
     Vector Size;
-	float heights[2000][2000];
-    
+	int imageSize;
 };
 
 
