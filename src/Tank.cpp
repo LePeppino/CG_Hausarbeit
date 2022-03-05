@@ -8,6 +8,8 @@
 
 #include "Tank.h"
 
+#define TERRAIN_DIM 24.6
+#define TERRAIN_HEIGHT 20
 
 Tank::Tank():fb(0,0,0), angleCorrection(0.0f)
 {
@@ -56,16 +58,16 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 	float x = chassisUrsprung.m03;
 	float y = chassisUrsprung.m23;
 
-
 	Vector planePos = chassis->transform().translation();
 
-	float tryoutX = (((planePos.X / 24.6) + 24.6 / 2.0) / 0.03075); //  ((X Position / Breite des Terrains ) + ( Breite des Terrains / 2) / (Breite des Terains/Bildbreite)
-	float tryoutZ = (((planePos.Z / 24.6) + 24.6 / 2.0) / 0.03075);
+	float tryoutX = (((planePos.X / TERRAIN_DIM) + TERRAIN_DIM / 2.0) / (TERRAIN_DIM / 800)); //  ((X Position / Breite des Terrains ) + ( Breite des Terrains / 2) / (Breite des Terains/Bildbreite)
+	float tryoutZ = (((planePos.Z / TERRAIN_DIM) + TERRAIN_DIM / 2.0) / (TERRAIN_DIM / 800));
 	float heightForCords = terrain->heights[static_cast<int>(tryoutX)][static_cast<int>(tryoutZ)];
 	try {
 
-		// 7 weil Terrain höhe
-		if (planePos.Y > heightForCords * 20.0) { // Höhe des Terrains 
+		// Während Spieler über Terrain fliegt
+		while (planePos.Y > heightForCords * TERRAIN_HEIGHT)
+		{
 
 			//https://www.youtube.com/watch?v=RpNPW89Y-3A
 
