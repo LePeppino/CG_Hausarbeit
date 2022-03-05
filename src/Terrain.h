@@ -31,19 +31,17 @@ public:
     
     const Vector& size() const { return Size; }
     void size(const Vector& s) { Size = s; }
-	
-	float getHeight(int x, int y);
-
+	int getImageSize() { return imageSize; }
+	float heights[2000][2000];
 protected:
     void applyShaderParameter();
-	float *terrainHeights = (float *)malloc(2000 * 2000 * (sizeof(float)));
     VertexBuffer VB;
     IndexBuffer IB;
     Texture DetailTex[4];
     Texture MixTex;
     Texture HeightTex;
     Vector Size;
-	float heights[2000][2000];
+	int imageSize;
 };
 
 

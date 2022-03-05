@@ -135,7 +135,6 @@ void Application::update(float dtime)
 	fb = 0;
 	lr = 0;
 	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);
-	//Cam.update();
 	
 }
 

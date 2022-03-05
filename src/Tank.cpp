@@ -30,7 +30,7 @@ bool Tank::loadModels(const char* ChassisFile, const char* CannonFile)
         cannon->shader(pShader);
 		Matrix chassisMatrix, chassisMov, chassisUrsprung;
 		chassisUrsprung = chassis->transform();
-		chassisMov.translation(0, 10, 0);
+		chassisMov.translation(0, 5, 0);
 		chassisMatrix = chassisUrsprung * chassisMov;
 		this->chassis->transform(chassisMatrix);
 		this->cannon->transform(chassisMatrix);
@@ -69,29 +69,63 @@ void Tank::aim(const Vector& Target )
 
 void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 {
-    Matrix chassisMatrix, chassisMov , chassisRot, chassisUrsprung;
+    Matrix chassisMatrix, chassisMov , chassisRot, chassisPitch, chassisRoll, chassisUrsprung;
     Matrix cannonMatrix;
-	float i = terrain->getHeight((int)chassisUrsprung.m03, (int)chassisUrsprung.m23);
     //chassis
     chassisUrsprung = chassis->transform(); 
-	if (chassisUrsprung.m13 * 7 > terrain->getHeight((int) chassisUrsprung.m03 / 10 , (int) chassisUrsprung.m23 /10 )) {
-		
-		chassisRot.rotationY(fb.Y * dtime);
-		//chassisRot.rotationZ(fb.X *dtime);
-		chassisMov.translation(0.05, fb.X*dtime * 1, 0);
+	float x = chassisUrsprung.m03;
+	float y = chassisUrsprung.m23;
 
-		chassisMatrix = chassisUrsprung * chassisMov * chassisRot;
-		this->chassis->transform(chassisMatrix);
+
+	Vector planePos = chassis->transform().translation();
+	/*
+	float xWert = planePos.X * 0.005 - 5.0;
+	float yWert = planePos.Y * 0.005 - 5.0;
+	float zWert = planePos.Z * 0.005 - 5.0;
+
+	Vector boundingBoxMin = chassis->boundingBox().Min;
+	float planeMin = boundingBoxMin.length();
+	Vector boundingBoxMax = chassis->boundingBox().Max;
+	float planeMax = boundingBoxMax.length();
+
+	float planeModel;
+
+	if (planeMin < planeMax)
+		planeModel = planeMax;
+	else
+		planeModel = planeMin;
+		*/
+	float tryoutX = (((planePos.X /10) + 5) / 0.005); //  ((X Position / Breite des Terrains ) + ( Breite des Terrains / 2) / (Breite des Terains/Bildbreite)
+	float tryoutZ = (((planePos.Z /10)+ 5) / 0.005);
+	float heightForCords = terrain->heights[static_cast<int>(tryoutX)][static_cast<int>(tryoutZ)];
+	try {
+
+		// 7 weil Terrain höhe
+		if (planePos.Y > heightForCords * terrain->height()) {
+
+			//https://www.youtube.com/watch?v=RpNPW89Y-3A
+
+			chassisPitch.rotationZ(-1 * fb.X *dtime);
+
+			chassisRoll.rotationX(-1 * fb.Y * dtime);
+
+			chassisMov.translation(0.1, 0, 0);
+
+			chassisMatrix = chassisUrsprung * chassisPitch * chassisRoll * chassisMov;
+			this->chassis->transform(chassisMatrix);
+
+			cannonMatrix = chassisUrsprung;
+			this->cannon->transform(cannonMatrix);
+			// Camera
+			Matrix thirdPerson;
+			Vector target = chassisMatrix.translation();
+			thirdPerson.lookAt(target, chassisMatrix.up(), chassisMatrix.translation() - chassisMatrix.right() * 7 + chassisMatrix.up() * 2);
+			cam.setViewMatrix(thirdPerson);
+		}
 	}
-    
+	catch (...) {
 
-
-    cannonMatrix = chassisUrsprung;
-    this->cannon->transform(cannonMatrix);
-	Matrix thirdPerson;
-	Vector target = chassisMatrix.translation();
-	thirdPerson.lookAt(target, chassisMatrix.up(), chassisMatrix.translation() - chassisMatrix.right() * 7 + chassisMatrix.up());
-	cam.setViewMatrix(thirdPerson);
+	}
 }
 
 void Tank::draw(const BaseCamera& Cam)

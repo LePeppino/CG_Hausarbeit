@@ -4,8 +4,7 @@
 #include "LinePlaneModel.h"
 #include "Model.h"
 
-static int imgWidth = NULL;
-static int imgHeight = NULL;
+static int imageSize = NULL;
 
 Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(10,7,10)
 {
@@ -47,20 +46,19 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
     const RGBImage* tmp = HeightTex.getRGBImage();
 
     //Faktor berechnen um die reale Bildgröße in die gewünschte Terraingröße umrechnen zu können
-	imgWidth = tmp->width();
-	imgHeight = tmp->height();
+	imageSize = tmp->width();
 
 	//Skalierungsverhältnis zwischen Maße der Ebene und Pixelmaße des Bildes
-    float widthScale = this->Size.X / imgWidth;
-    float heightScale = this->Size.Z / imgHeight;
+    float widthScale = this->Size.X / imageSize;
+    float heightScale = this->Size.Z / imageSize;
 
     //Vertices vorläufig erstellen
-    Vector** vertices = new Vector * [imgWidth + 2];
-    for (int i = 0; i < imgWidth + 2; ++i) {
-        vertices[i] = new Vector[imgHeight + 2];
+    Vector** vertices = new Vector * [imageSize + 2];
+    for (int i = 0; i < imageSize + 2; ++i) {
+        vertices[i] = new Vector[imageSize + 2];
     }
-    for (int col = 0; col < imgHeight; col++) {
-        for (int row = 0; row < imgWidth; row++) {
+    for (int col = 0; col < imageSize; col++) {
+        for (int row = 0; row < imageSize; row++) {
             //Grauwert für HeightMap bestimmen
             Color pixelColor = tmp->getPixelColor(row, col);
             float pixelY = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
@@ -71,7 +69,6 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
 
             //Vertex zum Buffer hinzufügen
             vertices[col + 1][row + 1] = Vector(pixelX, pixelY, pixelZ);
-			terrainHeights[col * imgWidth + row] = pixelY;
 			heights[col][row] = pixelY;
 
         }
@@ -80,8 +77,8 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
     //Vertexbuffer befüllen
     this->VB.begin();
     
-    for (int col = 0; col < imgHeight; col++) {
-        for (int row = 0; row < imgWidth; row++) {
+    for (int col = 0; col < imageSize; col++) {
+        for (int row = 0; row < imageSize; row++) {
             
             int x = col + 1;
             int y = row + 1;
@@ -103,10 +100,10 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
             this->VB.addNormal(normal*-1);
 
 			//Texturkoordinaten für Heightmap hinzufügen
-            this->VB.addTexcoord0(row / (float)imgWidth - 1, col / (float)imgHeight - 1);
+            this->VB.addTexcoord0(row / (float)imageSize - 1, col / (float)imageSize - 1);
 
 			//Faktor 150 beschreibt die Wiederholung der Gras-Textur auf der Ebene
-            this->VB.addTexcoord1(row / ((float)imgWidth - 1) * 150, col / ((float)imgHeight - 1) * 150);
+            this->VB.addTexcoord1(row / ((float)imageSize - 1) * 150, col / ((float)imageSize - 1) * 150);
 
             this->VB.addVertex(vertices[x][y]);
             
@@ -126,16 +123,16 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
 	* https://stackoverflow.com/questions/6656358/calculating-normals-in-a-triangle-mesh/6661242#6661242
 	*/
     this->IB.begin();
-    for (int col = 0; col < imgHeight - 1; col++) {
-        for (int row = 0; row < imgWidth - 1; row++) {
-            int index = row + col * imgWidth;
+    for (int col = 0; col < imageSize - 1; col++) {
+        for (int row = 0; row < imageSize - 1; row++) {
+            int index = row + col * imageSize;
 			//unteres linkes Dreieck
             this->IB.addIndex(index);
             this->IB.addIndex(index + 1);
-            this->IB.addIndex(index + 1 + imgWidth);
+            this->IB.addIndex(index + 1 + imageSize);
 			//oberes rechtes Dreieck
-            this->IB.addIndex(index + 1 + imgWidth);
-            this->IB.addIndex(index + imgWidth);
+            this->IB.addIndex(index + 1 + imageSize);
+            this->IB.addIndex(index + imageSize);
             this->IB.addIndex(index);
         }
     }
@@ -177,25 +174,4 @@ void Terrain::applyShaderParameter()
     
     
     // TODO: add additional parameters if needed..
-}
-
-float Terrain::getHeightForCords(int x, int z) {
-	int xt, zt;
-	if (terrainHeights == NULL) {
-		return(0.0);
-	}
-	xt = x + imgWidth / 2;
-	zt = imgWidth - (z + imgHeight / 2);
-
-	if ((xt > imgWidth) || (zt > imgHeight) || (xt < 0) || (zt < 0)) {
-		return(0.0);
-	}
-	return (terrainHeights[zt * imgWidth + xt]);
-}
-
-float Terrain::getHeight(int x, int y) {
-	if (heights != NULL) {
-		return heights[x][y];
-	}
-	return 0.0;
 }
