@@ -55,7 +55,7 @@ void main()
     color = mix(GrassTexture, RockTexture, MixTextureVec);
    
     //Nebel
-    float s = sat(0.5);
+    float s = sat(1);
     vec3 colorFogCalc = vec3(0.45, 0.35, 0.45); //Farbe für sunset skybox
     vec4 colorFog = vec4(colorFogCalc.rgb, 1);
     vec4 newColorFog = (1-s)*color+(s*colorFog);    

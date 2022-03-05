@@ -24,6 +24,7 @@
 #include "triangleboxmodel.h"
 #include "model.h"
 #include "terrainshader.h"
+#include "WaterShader.h"
 #include "rgbimage.h"
 
 
@@ -46,16 +47,6 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     // add to render list
     Models.push_back(pModel);*/
 
-	//Meeresspiegel als PlaneModel
-	pModel = new TrianglePlaneModel(601, 601, 100, 100);
-	TerrainShader* pWaterShader = new TerrainShader(ASSET_DIRECTORY);
-	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
-	pModel->shader(pWaterShader, true);
-	Matrix waterMatrix;
-	waterMatrix.translation(0, 1, 0);
-	pModel->transform(waterMatrix);
-	Models.push_back(pModel);
-
     //Map generieren aus Heightmap
     const char* file = ASSET_DIRECTORY "heightmap_iceland.png";
     Texture t;
@@ -70,14 +61,12 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     //Skybox generieren und ausrichten
     pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
     pModel->shader(new PhongShader(), true);
-
 	Matrix skyboxMatrix, skyboxScale, skyboxTrans;
 	pModel->transform();
 	skyboxScale.scale(3);
 	skyboxTrans.translation(0, 5, 0);
 	skyboxMatrix = skyboxScale * skyboxTrans;
 	pModel->transform(skyboxMatrix);
-
     Models.push_back(pModel);
    
 	//Terrain generieren
@@ -88,6 +77,16 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     pTerrain->load(ASSET_DIRECTORY "heightmap_iceland.png", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY"sand2.jpg", ASSET_DIRECTORY"snow2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
     Models.push_back(pTerrain);
     
+	//Meeresspiegel als PlaneModel
+	//Nach dem Terrain rendern, um Transparenz sichtbar zu machen!
+	pModel = new TrianglePlaneModel(601, 601, 100, 100, true);
+	WaterShader* pWaterShader = new WaterShader(ASSET_DIRECTORY);
+	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
+	pModel->shader(pWaterShader, true);
+	Matrix waterMatrix;
+	waterMatrix.translation(0, 5, 0);
+	pModel->transform(waterMatrix);
+	Models.push_back(pModel);
 }
 void Application::start()
 {
@@ -104,6 +103,7 @@ void Application::update(float dtime)
     double newYPosition, newXPosition;
     glfwGetCursorPos(this->pWindow, &newXPosition, &newYPosition);
 
+	// Nicht für das Projekt benötigt, kann später weg
     // Beim Drücken der S-Taste kann das Terrain per Mausbewegung skaliert werden
 	// Die Cam bleibt dabei still
     //if (glfwGetKey(this->pWindow, GLFW_KEY_S) == GLFW_PRESS) {

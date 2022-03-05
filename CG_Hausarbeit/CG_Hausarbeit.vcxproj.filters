@@ -92,6 +92,9 @@
     <ClCompile Include="..\src\vector.cpp">
       <Filter>Quelldateien\utils\yourclasses</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\WaterShader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Application.h">
@@ -160,6 +163,9 @@
     <ClInclude Include="..\src\vector.h">
       <Filter>Quelldateien\utils\yourclasses</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\WaterShader.h">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\fsterrain.glsl">
@@ -172,6 +178,12 @@
       <Filter>Quelldateien</Filter>
     </None>
     <None Include="..\..\Online Resources\HA-Computergrafik-main\assets\fsphong.glsl">
+      <Filter>Quelldateien</Filter>
+    </None>
+    <None Include="..\assets\fswater.glsl">
+      <Filter>Quelldateien</Filter>
+    </None>
+    <None Include="..\assets\vswater.glsl">
       <Filter>Quelldateien</Filter>
     </None>
   </ItemGroup>

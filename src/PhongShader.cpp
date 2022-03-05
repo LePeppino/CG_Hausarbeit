@@ -51,7 +51,9 @@ const char *FragmentShaderCode =
 "out vec4 FragColor;"
 "float sat( in float a)"
 "{"
-"    return clamp(a, 0.0, 1.0);"
+"    float dmin = 0;"
+"    float dmax = 100;"
+"    return clamp(pow((length(EyePos-Position)-dmin)/dmax-dmin,a), 0.0, 1.0);"
 "}"
 "void main()"
 "{"
@@ -63,6 +65,11 @@ const char *FragmentShaderCode =
 "    vec3 R = reflect(-L,N);"
 "    vec3 DiffuseComponent = LightColor * DiffuseColor * sat(dot(N,L));"
 "    vec3 SpecularComponent = LightColor * SpecularColor * pow( sat(dot(R,E)), SpecularExp);"
+"    vec4 color = DiffTex;"
+"    float s = sat(2);"
+"    vec3 colorFogCalc = vec3(0.45, 0.35, 0.45);"
+"    vec4 colorFog = vec4(colorFogCalc.rgb, 1);"
+"    vec4 newColorFog = (1 - s)*color + (s*colorFog);"	
 "    FragColor = vec4((DiffuseComponent + AmbientColor)*DiffTex.rgb + SpecularComponent ,DiffTex.a);"
 "}";
 
@@ -81,10 +88,6 @@ PhongShader::PhongShader(bool LoadStaticShaderCode) :
 	}
 
 	ShaderProgram = createShaderProgram(VertexShaderCode, FragmentShaderCode);
-	/*bool loaded = load(ASSET_DIRECTORY "vsphong.glsl", ASSET_DIRECTORY "fsphong.glsl");
-	if (!loaded) {
-		throw std::exception();
-	}*/
     assignLocations();
 }
 void PhongShader::assignLocations()

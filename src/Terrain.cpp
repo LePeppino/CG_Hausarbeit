@@ -4,7 +4,8 @@
 #include "LinePlaneModel.h"
 #include "Model.h"
 
-Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) : Size(20, 10, 20) //Size(14.3,6,14.3)
+Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) 
+	: Size(24.6, 20, 24.6) //Size(14.3,6,14.3)
 {
     if(HeightMap && DetailMap1 && DetailMap2)
     {

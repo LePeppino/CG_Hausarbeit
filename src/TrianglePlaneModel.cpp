@@ -7,10 +7,13 @@
 //
 
 #include "TrianglePlaneModel.h"
+#include "Watershader.h"
 
 
-TrianglePlaneModel::TrianglePlaneModel( float DimX, float DimZ, int NumSegX, int NumSegZ )
+TrianglePlaneModel::TrianglePlaneModel( float DimX, float DimZ, int NumSegX, int NumSegZ, bool water )
 {
+	this->isWater = water;
+
     ++NumSegX; ++NumSegZ;
 	float startx = DimX*-0.5f;
 	float startz = DimZ*-0.5f;
@@ -61,6 +64,10 @@ TrianglePlaneModel::TrianglePlaneModel( float DimX, float DimZ, int NumSegX, int
 
 void TrianglePlaneModel::draw( const BaseCamera& Cam )
 {
+	if (isWater) {
+		applyShaderParameter();
+	}
+
     BaseModel::draw(Cam);
     
     VB.activate();
@@ -71,4 +78,18 @@ void TrianglePlaneModel::draw( const BaseCamera& Cam )
     IB.deactivate();
     VB.deactivate();
     
+}
+
+void TrianglePlaneModel::shader(BaseShader* shader, bool deleteOnDestruction)
+{
+	BaseModel::shader(shader, deleteOnDestruction);
+}
+
+//Shaderwerte übergeben, aktualisieren und pro Frame neu anwenden
+void TrianglePlaneModel::applyShaderParameter()
+{
+	WaterShader* Shader = dynamic_cast<WaterShader*>(BaseModel::shader());
+	if (!Shader)
+		return;
+
 }
