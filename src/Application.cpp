@@ -58,28 +58,89 @@ void Application::update(float dtime)
     
 	Vector pos;
 
-	keyPress(fb, lr);
+	keyPress(fb, lr, dtime);
 	pTank->steer(fb, lr);
-	fb = 0;
-	lr = 0;
+	/*fb = 0;
+	lr = 0;*/
 	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);
 	
 }
-
-void Application::keyPress(float &fb, float &lr) {
-
+// Steuerung des Fliegers mit weicher Beschleunigung
+// https://gamedev.stackexchange.com/questions/127924/smooth-character-movement
+void Application::keyPress(float &fb, float &lr, float dtime)
+{
+	float minVel = -1;
+	float maxVel = 1;
+	float acc = 1;
+	bool key_pressed = false;
 
 	if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS) {
-		fb = -1;
+		key_pressed = true;
+		if (fb > minVel) {
+			fb -= acc * dtime;
+			if (fb < minVel) {
+				fb = minVel;
+			}
+		}
 	}
 	if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS) {
-		fb = 1;
+		key_pressed = true;
+		if (fb < maxVel) {
+			fb += acc * dtime;
+			if (fb > maxVel) {
+				fb = maxVel;
+			}
+		}
 	}
 	if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS) {
-		lr = -1;
+		key_pressed = true;
+		if (lr > minVel) {
+			lr -= acc * dtime;
+			if (lr < minVel) {
+				lr = minVel;
+			}
+		}
 	}
 	if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS) {
-		lr = 1;
+		key_pressed = true;
+		if (lr < maxVel) {
+			lr += acc * dtime;
+			if (lr > maxVel) {
+				lr = maxVel;
+			}
+		}
+	}
+	//Keine gedrückten Tasten ODER beide entgegengesetzte Tasten gedrückt
+	if (!key_pressed || 
+		glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS && glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS ||
+		glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS && glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS) 
+	{
+		//FB Beschleunigung abschwächen
+		if (fb < 0) {
+			fb += acc * dtime;
+			if (fb > 0) {
+				fb = 0;
+			}
+		}
+		else if (fb > 0) {
+			fb -= acc * dtime;
+			if (fb < 0) {
+				fb = 0;
+			}
+		}
+		//LR Beschleunigung abschwächen
+		if (lr < 0) {
+			lr += acc * dtime;
+			if (lr > 0) {
+				lr = 0;
+			}
+		}
+		else if (lr > 0) {
+			lr -= acc * dtime;
+			if (lr < 0) {
+				lr = 0;
+			}
+		}
 	}
 }
 
