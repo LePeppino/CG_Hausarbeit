@@ -19,8 +19,8 @@ Model::Model() : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 Model::Model(const char* ModelFile, bool FitSize) : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 {
     bool ret = load(ModelFile);
-    if(!ret)
-        throw std::exception();
+   // if(!ret)
+     //  throw std::exception();
 }
 Model::~Model()
 {

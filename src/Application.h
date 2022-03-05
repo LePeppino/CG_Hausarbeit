@@ -18,6 +18,7 @@
 #include "indexbuffer.h"
 #include "basemodel.h"
 #include "terrain.h"
+#include "Tank.h"
 
 class Application
 {
@@ -30,11 +31,19 @@ public:
     void end();
 	void createScene();
 
+	void keyPress(float&, float &);
+
 protected:
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
     Terrain* pTerrain;
+
+	Tank* pTank;
+	Model* pTankTop;
+	Model* pTankBot;
+	float fb, lr;
+	double mx, my;
     float oldXPosition,oldYPosition;
 };
 

@@ -55,10 +55,32 @@ void Application::start()
 
 void Application::update(float dtime)
 {
-    double newYPosition, newXPosition;
-    glfwGetCursorPos(this->pWindow, &newXPosition, &newYPosition);
+    
+	Vector pos;
 
-	Cam.update();
+	keyPress(fb, lr);
+	pTank->steer(fb, lr);
+	fb = 0;
+	lr = 0;
+	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);
+	
+}
+
+void Application::keyPress(float &fb, float &lr) {
+
+
+	if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS) {
+		fb = -1;
+	}
+	if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS) {
+		fb = 1;
+	}
+	if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS) {
+		lr = -1;
+	}
+	if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS) {
+		lr = 1;
+	}
 }
 
 void Application::draw()
@@ -130,4 +152,12 @@ void Application::createScene()
 	waterMatrix.translation(0, 5, 0);
 	pModel->transform(waterMatrix);
 	Models.push_back(pModel);
+
+	//Tank
+	PhongShader* pPhongShader;
+	pTank = new Tank();
+	pPhongShader = new PhongShader();
+	pTank->shader(pPhongShader, true);
+	pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
+	Models.push_back(pTank);
 }

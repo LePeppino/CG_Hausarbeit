@@ -95,6 +95,9 @@
     <ClCompile Include="..\src\WaterShader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Tank.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Application.h">
@@ -165,6 +168,9 @@
     </ClInclude>
     <ClInclude Include="..\src\WaterShader.h">
       <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Tank.h">
+      <Filter>Quelldateien\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
