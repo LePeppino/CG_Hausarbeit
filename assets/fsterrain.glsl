@@ -7,8 +7,8 @@ uniform vec3 SpecularColor;
 uniform vec3 AmbientColor;
 uniform float SpecularExp;
 
-uniform sampler2D MixTex; // for exercise 3
-uniform sampler2D DetailTex[4]; // for exercise 3 // 4 Plätze für Zusatzaufgabe 5
+uniform sampler2D MixTex;
+uniform sampler2D DetailTex[4];
 uniform vec3 Scaling;
 
 in vec3 Position;
@@ -24,7 +24,7 @@ out vec4 FragColor;
 float sat(in float a)
 {
     float dmin = 0;
-    float dmax = 50;
+    float dmax = 150;
     
     return clamp(pow((length(EyePos-Position)-dmin)/dmax-dmin,a), 0.0, 1.0);
 }
@@ -55,8 +55,8 @@ void main()
     color = mix(GrassTexture, RockTexture, MixTextureVec);
    
     //Nebel
-    float s = sat(3);
-    vec3 colorFogCalc = vec3(0.40, 0.40, 0.45); //Farbe für sunset skybox
+    float s = sat(1);
+    vec3 colorFogCalc = vec3(0.45, 0.35, 0.45); //Farbe für sunset skybox
     vec4 colorFog = vec4(colorFogCalc.rgb, 1);
     vec4 newColorFog = (1-s)*color+(s*colorFog);    
 

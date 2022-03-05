@@ -42,6 +42,7 @@
     <ClCompile Include="..\src\TriangleSphereModel.cpp" />
     <ClCompile Include="..\src\vector.cpp" />
     <ClCompile Include="..\src\VertexBuffer.cpp" />
+    <ClCompile Include="..\src\WaterShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Aabb.h" />
@@ -66,10 +67,15 @@
     <ClInclude Include="..\src\TriangleSphereModel.h" />
     <ClInclude Include="..\src\vector.h" />
     <ClInclude Include="..\src\VertexBuffer.h" />
+    <ClInclude Include="..\src\WaterShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\fsphong.glsl" />
     <None Include="..\assets\fsterrain.glsl" />
+    <None Include="..\assets\fswater.glsl" />
+    <None Include="..\assets\vsphong.glsl" />
     <None Include="..\assets\vsterrain.glsl" />
+    <None Include="..\assets\vswater.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

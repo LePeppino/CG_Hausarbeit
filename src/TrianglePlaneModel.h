@@ -20,9 +20,13 @@
 class TrianglePlaneModel : public BaseModel
 {
 public:
-    TrianglePlaneModel( float DimX, float DimZ, int NumSegX, int NumSegZ );
+    TrianglePlaneModel( float DimX, float DimZ, int NumSegX, int NumSegZ, bool water );
     virtual ~TrianglePlaneModel() {}
     virtual void draw(const BaseCamera& Cam);
+	void applyShaderParameter();
+	void shader(BaseShader* shader, bool deleteOnDestruction);
+
+	bool isWater = false;
 protected:
     VertexBuffer VB;
     IndexBuffer IB;
