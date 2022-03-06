@@ -32,7 +32,7 @@ bool Tank::loadModels(const char* ChassisFile, const char* CannonFile)
         cannon->shader(pShader);
 		Matrix chassisMatrix, chassisMov, chassisUrsprung;
 		chassisUrsprung = chassis->transform();
-		chassisMov.translation(0, 25, 0);
+		chassisMov.translation(0, 35, 0);
 		chassisMatrix = chassisUrsprung * chassisMov;
 		this->chassis->transform(chassisMatrix);
 		this->cannon->transform(chassisMatrix);
@@ -60,7 +60,8 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 
 	Vector planePos = chassis->transform().translation();
 
-	float tryoutX = (((planePos.X / TERRAIN_DIM) + TERRAIN_DIM / 2.0) / (TERRAIN_DIM / 800)); //  ((X Position / Breite des Terrains ) + ( Breite des Terrains / 2) / (Breite des Terains/Bildbreite)
+	// ((X Position / Breite des Terrains ) + ( Breite des Terrains / 2) / (Breite des Terains/Bildbreite)
+	float tryoutX = (((planePos.X / TERRAIN_DIM) + TERRAIN_DIM / 2.0) / (TERRAIN_DIM / 800)); 
 	float tryoutZ = (((planePos.Z / TERRAIN_DIM) + TERRAIN_DIM / 2.0) / (TERRAIN_DIM / 800));
 	float heightForCords = terrain->heights[static_cast<int>(tryoutX)][static_cast<int>(tryoutZ)];
 	try {
@@ -76,9 +77,9 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 
 			chassisRoll.rotationX(-1 * fb.Y * dtime);
 			
-			chassisTurn.rotationY(0.2 * fb.Y * dtime);
+			chassisTurn.rotationY(0.4 * fb.Y * dtime);
 
-			chassisMov.translation(0.1, 0, 0);
+			chassisMov.translation(0.15, 0, 0);
 
 			chassisMatrix = chassisUrsprung * chassisPitch * chassisRoll * chassisTurn * chassisMov;
 			this->chassis->transform(chassisMatrix);

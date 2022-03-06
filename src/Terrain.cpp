@@ -8,7 +8,7 @@
 #define TERRAIN_HEIGHT 20
 
 Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) 
-	: Size(TERRAIN_DIM, TERRAIN_HEIGHT, TERRAIN_DIM) //Size(14.3,6,14.3)
+	: Size(TERRAIN_DIM, TERRAIN_HEIGHT, TERRAIN_DIM)
 {
     if(HeightMap && DetailMap1 && DetailMap2)
     {
@@ -107,7 +107,7 @@ bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* D
             this->VB.addTexcoord0(row / (float)imageSize - 1, col / (float)imageSize - 1);
 
 			//Faktor beschreibt die Wiederholung der Gras-Textur auf der Ebene
-            this->VB.addTexcoord1(row / ((float)imageSize - 1) * 1000, col / ((float)imageSize - 1) * 1000);
+            this->VB.addTexcoord1(row / ((float)imageSize - 1) * 500, col / ((float)imageSize - 1) * 500);
 
             this->VB.addVertex(vertices[x][y]);
             
