@@ -72,7 +72,6 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 
 			//https://www.youtube.com/watch?v=RpNPW89Y-3A
 
-			//TODO: Leichte Bewegung nach links/rechts beim Neigen
 			chassisPitch.rotationZ(-1 * fb.X * dtime);
 
 			chassisRoll.rotationX(-1 * fb.Y * dtime);

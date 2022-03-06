@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Aabb.cpp" />
+    <ClCompile Include="..\src\Airplane.cpp" />
     <ClCompile Include="..\src\Application.cpp" />
     <ClCompile Include="..\src\BaseModel.cpp" />
     <ClCompile Include="..\src\BaseShader.cpp" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Aabb.h" />
+    <ClInclude Include="..\src\Airplane.h" />
     <ClInclude Include="..\src\Application.h" />
     <ClInclude Include="..\src\BaseModel.h" />
     <ClInclude Include="..\src\BaseShader.h" />

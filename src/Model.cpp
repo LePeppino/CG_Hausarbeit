@@ -19,8 +19,8 @@ Model::Model() : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 Model::Model(const char* ModelFile, bool FitSize) : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 {
     bool ret = load(ModelFile);
-   // if(!ret)
-     //  throw std::exception();
+    if(!ret)
+       throw std::exception();
 }
 Model::~Model()
 {
@@ -46,7 +46,7 @@ void Model::deleteNodes(Node* pNode)
 
 bool Model::load(const char* ModelFile, bool FitSize)
 {
-    const aiScene* pScene = aiImportFile( ModelFile,aiProcessPreset_TargetRealtime_Fast | aiProcess_TransformUVCoords );
+    const aiScene* pScene = aiImportFile(ModelFile, aiProcessPreset_TargetRealtime_Fast | aiProcess_TransformUVCoords);
     
     if(pScene==NULL || pScene->mNumMeshes<=0)
         return false;
@@ -66,6 +66,24 @@ bool Model::load(const char* ModelFile, bool FitSize)
     return true;
 }
 
+//bool Model::collision(Model* model) {
+//
+//	Vector a = Transform.translation();
+//	Vector b = model->Transform.translation();
+//
+//	//Größe der AABB berechnen. 
+//	Vector sizeBBa = BoundingBox.size()* Transform.scaleR().length();
+//	Vector sizeBBb = model->BoundingBox.size()*model->Transform.scaleR().length();
+//
+//
+//
+//	bool collisionX = a.X + sizeBBa.X >= b.X && b.X + sizeBBb.X >= a.X;
+//	bool collisionY = a.Y + sizeBBa.Y >= b.Y && b.Y + sizeBBb.Y >= a.Y;
+//	bool collisionZ = a.Z + sizeBBa.Z >= b.Z && b.Z + sizeBBb.Z >= a.Z;
+//
+//	return collisionX && collisionY && collisionZ;
+//
+//}
 
 Vector Model::createVector(const aiVector3D& old) {
     return Vector(old.x, old.y, old.z);
@@ -97,17 +115,17 @@ void Model::loadMeshes(const aiScene* pScene, bool FitSize)
 
     //Durch alle Meshes gehen 
     for (int i = 0; i < MeshCount; i++) {
-        //temporäre Variablen für die übersichtlichkeit
+        //temp Variablen
         aiMesh* tmpAIMesh = pScene->mMeshes[i];
         VertexBuffer* tmpVB = &pMeshes[i].VB;
 
-        //Vertices des Meshes in den Vertexbuffer schreiben
+        //Vertizes in Vertexbuffer
         tmpVB->begin();
         for (int posVer = 0; posVer < tmpAIMesh->mNumVertices; posVer++) {
-            //Normale umgewandelt in den Vertexbuffer schreiben
+            //Normale umwandeln
             tmpVB->addNormal(createVector(tmpAIMesh->mNormals[posVer]));
 
-            //Texturkoordinaten in den Vertexbuffer schreiben
+            //Texturkoordinaten in Vertexbuffer
             for (int posTex = 0; posTex < 4; posTex++) {
                 if (tmpAIMesh->HasTextureCoords(posTex)) {
                     Vector tmp = createVector(tmpAIMesh->mTextureCoords[posTex][posVer]);
@@ -139,9 +157,9 @@ void Model::loadMeshes(const aiScene* pScene, bool FitSize)
 
         IndexBuffer* tmpIB = &pMeshes[i].IB;
         tmpIB->begin();
-        //Indexbuffer füllen, durch Alle Flächen durchgehen indicies speichern
+        //Indexbuffer füllen
         for (int pos = 0; pos < tmpAIMesh->mNumFaces; pos++) {
-            //temp Face für übersichtlichkeit
+            //temp Face
             aiFace tmpAiFace = tmpAIMesh->mFaces[pos];
             for (int ind = 0; ind < tmpAiFace.mNumIndices; ind++) {
                 tmpIB->addIndex(tmpAiFace.mIndices[ind]);
