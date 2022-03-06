@@ -56,8 +56,8 @@ void Application::start()
 void Application::update(float dtime)
 {
 	keyPress(fb, lr, dtime);
-	pTank->steer(fb, lr);
-	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);	
+	pAirplane->steer(fb, lr);
+	pAirplane->update(dtime, Vector(0,0,0), pTerrain, Cam);
 }
 
 // Steuerung des Fliegers mit weicher Beschleunigung
@@ -198,16 +198,21 @@ void Application::createScene()
 	pTerrain->load(ASSET_DIRECTORY "heightmap_iceland.png", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY"sand2.jpg", ASSET_DIRECTORY"snow2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
 	Models.push_back(pTerrain);
 
-	//Tank
-	PhongShader* pPhongShader;
-	pTank = new Tank();
-	pPhongShader = new PhongShader();
-	pTank->shader(pPhongShader, true);
-	pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
-	Models.push_back(pTank);
+	//Airplane
+	//Model von https://free3d.com/3d-model/airplane-v2--659376.html
+	pAirplane = new Airplane();
+	pAirplane->shader(new PhongShader(), true);
+	pAirplane->loadModels(ASSET_DIRECTORY "airplane_v2/11804_Airplane_v2_l2.obj");
+	/*Matrix planeMat, planeScale, planeRoll;
+	planeScale.scale(0.02, 0.02, 0.02);
+	planeRoll.rotationZ(90);
+	planeMat = planeScale * planeRoll;
+	pAirplane->transform(planeMat);*/
+
+	Models.push_back(pAirplane);
 
 	//Meeresspiegel als PlaneModel
-	//Nach dem Terrain rendern, um Transparenz sichtbar zu machen!
+	//Nach dem Terrain und Objekten rendern, um Transparenz sichtbar zu machen!
 	pModel = new TrianglePlaneModel(1001, 1001, 100, 100, true);
 	WaterShader* pWaterShader = new WaterShader(ASSET_DIRECTORY);
 	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));

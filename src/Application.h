@@ -18,7 +18,7 @@
 #include "indexbuffer.h"
 #include "basemodel.h"
 #include "terrain.h"
-#include "Tank.h"
+#include "airplane.h"
 
 class Application
 {
@@ -39,9 +39,8 @@ protected:
     GLFWwindow* pWindow;
     Terrain* pTerrain;
 
-	Tank* pTank;
-	Model* pTankTop;
-	Model* pTankBot;
+	Airplane* pAirplane;
+	//Model* pPlane;
 	float fb = 0;
 	float lr = 0;
 	float moveVel = 0;

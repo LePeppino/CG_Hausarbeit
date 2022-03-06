@@ -96,7 +96,10 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Tank.cpp">
-      <Filter>Quelldateien\utils</Filter>
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Airplane.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +173,10 @@
       <Filter>Quelldateien</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Tank.h">
-      <Filter>Quelldateien\utils</Filter>
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Airplane.h">
+      <Filter>Quelldateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
