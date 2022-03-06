@@ -40,7 +40,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
 	int windowWidth, windowHeight;
 	glfwGetWindowSize(pWindow, &windowWidth, &windowHeight); //für PostFX
 	createScene();
-	//TODO PostFX?
+	//TODO PostFX
 }
 
 void Application::start()
@@ -55,23 +55,18 @@ void Application::start()
 
 void Application::update(float dtime)
 {
-    
-	Vector pos;
-
 	keyPress(fb, lr, dtime);
 	pTank->steer(fb, lr);
-	/*fb = 0;
-	lr = 0;*/
-	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);
-	
+	pTank->update(dtime, Vector(0,0,0), pTerrain, Cam);	
 }
+
 // Steuerung des Fliegers mit weicher Beschleunigung
 // https://gamedev.stackexchange.com/questions/127924/smooth-character-movement
 void Application::keyPress(float &fb, float &lr, float dtime)
 {
 	float minVel = -1;
 	float maxVel = 1;
-	float acc = 1;
+	float acc = 2;
 	bool key_pressed = false;
 
 	if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS) {
@@ -203,9 +198,17 @@ void Application::createScene()
 	pTerrain->load(ASSET_DIRECTORY "heightmap_iceland.png", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY"sand2.jpg", ASSET_DIRECTORY"snow2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
 	Models.push_back(pTerrain);
 
+	//Tank
+	PhongShader* pPhongShader;
+	pTank = new Tank();
+	pPhongShader = new PhongShader();
+	pTank->shader(pPhongShader, true);
+	pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
+	Models.push_back(pTank);
+
 	//Meeresspiegel als PlaneModel
 	//Nach dem Terrain rendern, um Transparenz sichtbar zu machen!
-	pModel = new TrianglePlaneModel(601, 601, 100, 100, true);
+	pModel = new TrianglePlaneModel(1001, 1001, 100, 100, true);
 	WaterShader* pWaterShader = new WaterShader(ASSET_DIRECTORY);
 	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
 	pModel->shader(pWaterShader, true);
@@ -214,11 +217,4 @@ void Application::createScene()
 	pModel->transform(waterMatrix);
 	Models.push_back(pModel);
 
-	//Tank
-	PhongShader* pPhongShader;
-	pTank = new Tank();
-	pPhongShader = new PhongShader();
-	pTank->shader(pPhongShader, true);
-	pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
-	Models.push_back(pTank);
 }
