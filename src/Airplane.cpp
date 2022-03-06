@@ -82,9 +82,9 @@ void Airplane::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 		}
 		else 
 		{
-			//Kollision --> Feedback & neu starten
+			//Kollision --> TODO: Feedback & neu starten
 			std::cout << "Kollision mit Terrain!" << std::endl;
-			
+			return;
 		}
 	}
 	catch (...) {

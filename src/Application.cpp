@@ -194,8 +194,8 @@ void Application::createScene()
 	TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
 	pTerrainShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "grass2.bmp"));
 	pTerrain->shader(pTerrainShader, true);
-	//TODO: DetailTexes aussortieren!
-	pTerrain->load(ASSET_DIRECTORY "heightmap_iceland.png", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY"sand2.jpg", ASSET_DIRECTORY"snow2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
+	pTerrain->load(ASSET_DIRECTORY "heightmap_iceland.png", ASSET_DIRECTORY"grass2.bmp", ASSET_DIRECTORY"rock2.jpg", ASSET_DIRECTORY "mixmap_sobel.bmp");
+	//pTerrain->loadNormalTextures(ASSET_DIRECTORY"grass2_n.jpg", ASSET_DIRECTORY"rock2_n.jpg");
 	Models.push_back(pTerrain);
 
 	//Airplane
@@ -203,11 +203,6 @@ void Application::createScene()
 	pAirplane = new Airplane();
 	pAirplane->shader(new PhongShader(), true);
 	pAirplane->loadModels(ASSET_DIRECTORY "airplane_v2/11804_Airplane_v2_l2.obj");
-	/*Matrix planeMat, planeScale, planeRoll;
-	planeScale.scale(0.02, 0.02, 0.02);
-	planeRoll.rotationZ(90);
-	planeMat = planeScale * planeRoll;
-	pAirplane->transform(planeMat);*/
 
 	Models.push_back(pAirplane);
 

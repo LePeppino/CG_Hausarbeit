@@ -3,13 +3,11 @@
 layout(location=0) in vec4 VertexPos;
 layout(location=1) in vec4 VertexNormal;
 layout(location=2) in vec2 VertexTexcoord0;
-
 layout(location=3) in vec2 VertexTexcoord1;
 
 out vec3 Position;
 out vec3 Normal;
 out vec2 Texcoord0;
-
 out vec2 Texcoord1;
 
 uniform mat4 ModelMat;
