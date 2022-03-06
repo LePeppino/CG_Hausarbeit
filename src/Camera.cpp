@@ -209,9 +209,11 @@ void Camera::updateMouseInput()
 
 void Camera::update()
 {
+	
     updateMouseInput();
     
     Vector Pos = position(); //m_Position + m_Panning + m_Zoom + m_Rotation;
     Vector Target = target(); //m_Target + m_Panning;
     m_ViewMatrix.lookAt(Target, m_Up, Pos);
+	
 }

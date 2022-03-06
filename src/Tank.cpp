@@ -30,7 +30,7 @@ bool Tank::loadModels(const char* ChassisFile, const char* CannonFile)
         cannon->shader(pShader);
 		Matrix chassisMatrix, chassisMov, chassisUrsprung;
 		chassisUrsprung = chassis->transform();
-		chassisMov.translation(0, 5, 0);
+		chassisMov.translation(0, 25, 0);
 		chassisMatrix = chassisUrsprung * chassisMov;
 		this->chassis->transform(chassisMatrix);
 		this->cannon->transform(chassisMatrix);
@@ -76,7 +76,7 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 	float x = chassisUrsprung.m03;
 	float y = chassisUrsprung.m23;
 
-
+	
 	Vector planePos = chassis->transform().translation();
 	/*
 	float xWert = planePos.X * 0.005 - 5.0;
@@ -95,13 +95,13 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 	else
 		planeModel = planeMin;
 		*/
-	float tryoutX = (((planePos.X /10) + 5) / 0.005); //  ((X Position / Breite des Terrains ) + ( Breite des Terrains / 2) / (Breite des Terains/Bildbreite)
-	float tryoutZ = (((planePos.Z /10)+ 5) / 0.005);
+	float tryoutX = (((planePos.X / 24.6) + 24.6/2.0) / 0.03075); //  ((X Position / Breite des Terrains ) + ( Breite des Terrains / 2) / (Breite des Terains/Bildbreite)
+	float tryoutZ = (((planePos.Z / 24.6)+ 24.6/2.0) / 0.03075);
 	float heightForCords = terrain->heights[static_cast<int>(tryoutX)][static_cast<int>(tryoutZ)];
 	try {
 
 		// 7 weil Terrain höhe
-		if (planePos.Y > heightForCords * terrain->height()) {
+		if (planePos.Y > heightForCords * 20.0) { // Höhe des Terrains 
 
 			//https://www.youtube.com/watch?v=RpNPW89Y-3A
 
@@ -114,6 +114,8 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 			chassisMatrix = chassisUrsprung * chassisPitch * chassisRoll * chassisMov;
 			this->chassis->transform(chassisMatrix);
 
+			boundingBox = this->chassis->boundingBox();
+
 			cannonMatrix = chassisUrsprung;
 			this->cannon->transform(cannonMatrix);
 			// Camera
@@ -121,6 +123,8 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 			Vector target = chassisMatrix.translation();
 			thirdPerson.lookAt(target, chassisMatrix.up(), chassisMatrix.translation() - chassisMatrix.right() * 7 + chassisMatrix.up() * 2);
 			cam.setViewMatrix(thirdPerson);
+			cam.setPosition(target);
+
 		}
 	}
 	catch (...) {

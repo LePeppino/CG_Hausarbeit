@@ -98,6 +98,12 @@
     <ClCompile Include="..\src\Tank.cpp">
       <Filter>Quelldateien\utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Entity.cpp">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Ring.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Application.h">
@@ -170,6 +176,12 @@
       <Filter>Quelldateien</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Tank.h">
+      <Filter>Quelldateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Entity.h">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Ring.h">
       <Filter>Quelldateien\utils</Filter>
     </ClInclude>
   </ItemGroup>

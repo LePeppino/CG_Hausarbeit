@@ -19,6 +19,7 @@
 #include "basemodel.h"
 #include "terrain.h"
 #include "Tank.h"
+#include "Ring.h"
 
 class Application
 {
@@ -33,6 +34,7 @@ public:
 
 	void keyPress(float&, float &);
 	float toRadian(float degrees);
+	float randomFloat(float a, float b);
 
 protected:
     Camera Cam;
@@ -44,6 +46,7 @@ protected:
 	Tank* pTank;
 	Model* pTankTop;
 	Model* pTankBot;
+	Ring* rings[50];
 	float fb, lr;
 	double mx, my;
     float oldXPosition,oldYPosition;
