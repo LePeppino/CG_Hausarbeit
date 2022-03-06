@@ -13,14 +13,15 @@
 #include "model.h"
 #include "PhongShader.h"
 #include "Terrain.h"
-#include "Tank.h"
+#include "Airplane.h"
+
 class Ring : public BaseModel
 {
 public:
     Ring();
     virtual ~Ring();
     bool loadModels(const char* ringFile, Terrain *terrain);
-	bool calcCollision(Tank *boundingBox);
+	bool calcCollision(Airplane *boundingBox);
     virtual void draw(const BaseCamera& Cam);
 	float randomFloat(float a, float b);
 	bool getActivated(){ return activated; }

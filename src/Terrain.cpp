@@ -28,6 +28,7 @@ Vector Terrain::normal(const Vector& a , const Vector& b , const Vector& c ) {
     return triangleNormal.normalize();
 }
 
+//nicht genutzt
 bool Terrain::loadNormalTextures(const char* NormalMap1, const char* NormalMap2) {
 	if (!NormalTex[0].load(NormalMap1))
 		return false;

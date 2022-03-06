@@ -58,6 +58,13 @@ void Application::update(float dtime)
 	keyPress(fb, lr, dtime);
 	pAirplane->steer(fb, lr);
 	pAirplane->update(dtime, Vector(0,0,0), pTerrain, Cam);
+
+	for (int i = 0; i < 50; i++) {
+		if (rings[i]->calcCollision(pAirplane) && !(rings[i]->getActivated())) {
+			rings[i]->activate();
+			std::cout << "HIT" << std::endl;
+		}
+	}
 }
 
 // Steuerung des Fliegers mit weicher Beschleunigung
@@ -138,7 +145,7 @@ void Application::keyPress(float &fb, float &lr, float dtime)
 		}
 	}
 }
-*/
+
 void Application::draw()
 {
     // 1. clear screen
@@ -211,7 +218,6 @@ void Application::createScene()
 	pAirplane = new Airplane();
 	pAirplane->shader(new PhongShader(), true);
 	pAirplane->loadModels(ASSET_DIRECTORY "airplane_v2/11804_Airplane_v2_l2.obj");
-
 	Models.push_back(pAirplane);
 
 	//Meeresspiegel als PlaneModel
@@ -224,14 +230,6 @@ void Application::createScene()
 	waterMatrix.translation(0, 5, 0);
 	pModel->transform(waterMatrix);
 	Models.push_back(pModel);
-
-
-	PhongShader* pPhongShader;
-	pTank = new Tank();
-	pPhongShader = new PhongShader();
-	pTank->shader(pPhongShader, true);
-	pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
-	Models.push_back(pTank);
 
 	for (int i = 0; i < 500; i++) {
 		pModel = new Model(ASSET_DIRECTORY "Lowpoly_tree_sample.obj");
@@ -258,8 +256,7 @@ void Application::createScene()
 
 	for (int i = 0; i < 50; i++) {
 		rings[i] = new Ring();
-		pPhongShader = new PhongShader();
-		rings[i]->shader(pPhongShader, true);
+		rings[i]->shader(new PhongShader(), true);
 		rings[i]->loadModels(ASSET_DIRECTORY "ring.obj", pTerrain);
 		Models.push_back(rings[i]);
 	}

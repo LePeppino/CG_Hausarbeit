@@ -16,8 +16,10 @@ public:
     void steer( float ForwardBackward, float LeftRight);
     void update(float dtime, Vector size, Terrain *terrain, Camera& cam);
     virtual void draw(const BaseCamera& Cam);
+
+	Model *chassis;
 protected:
-    Model *chassis;
+    
     
     Vector fb;
 

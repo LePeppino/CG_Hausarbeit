@@ -33,7 +33,7 @@ bool Ring::loadModels(const char *ringFile, Terrain *terrain) {
 			float convX, convZ;
 			convX = (((x / 24.6) + 24.6 / 2.0) / 0.03075);
 			convZ = (((z / 24.6) + 24.6 / 2.0) / 0.03075);
-			y = (terrain->heights[static_cast<int>(convX)][static_cast<int>(convZ)] * 20) + 5.0wsd;
+			y = (terrain->heights[static_cast<int>(convX)][static_cast<int>(convZ)] * 20) + 5.0;
 			rot.rotationY(randomFloat(0.0, 1.0));
 			scale.scale(0.1);
 			pos.translation(x, y, z);
@@ -57,15 +57,14 @@ float Ring::randomFloat(float a, float b) {
 	return  a + r;
 }
 
-// dürfte mit der Position des Fliegers gehen
-bool Ring::calcCollision(Tank *tank) {
-	Vector tankPos = tank->chassis->transform().translation();
+bool Ring::calcCollision(Airplane *pAirplane) {
+	Vector airplanePos = pAirplane->chassis->transform().translation();
 	Vector ringPos = this->ring->transform().translation();
 	float tryOut = this->boundingBox.Max.X;
-	return((this->boundingBox.Max.X * 0.1 + ringPos.X  > tankPos.X)
-		&& (this->boundingBox.Min.X * 0.1 + ringPos.X < tankPos.X)
-		&& (this->boundingBox.Max.Y * 0.1 + ringPos.Y > tankPos.Y)
-		&& (this->boundingBox.Min.Y * 0.1 + ringPos.Y < tankPos.Y)
-		&& (this->boundingBox.Max.Z * 0.1 + ringPos.Z > tankPos.Z)
-		&& (this->boundingBox.Min.Z * 0.1 + ringPos.Z < tankPos.Z));
+	return((this->boundingBox.Max.X * 0.1 + ringPos.X  > airplanePos.X)
+		&& (this->boundingBox.Min.X * 0.1 + ringPos.X < airplanePos.X)
+		&& (this->boundingBox.Max.Y * 0.1 + ringPos.Y > airplanePos.Y)
+		&& (this->boundingBox.Min.Y * 0.1 + ringPos.Y < airplanePos.Y)
+		&& (this->boundingBox.Max.Z * 0.1 + ringPos.Z > airplanePos.Z)
+		&& (this->boundingBox.Min.Z * 0.1 + ringPos.Z < airplanePos.Z));
 }
