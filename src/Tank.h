@@ -23,8 +23,11 @@ public:
     void steer( float ForwardBackward, float LeftRight);
     void update(float dtime, Vector size, Terrain *terrain, Camera& cam);
     virtual void draw(const BaseCamera& Cam);
+	AABB boundingBox;
+	Model *chassis, *cannon;
+
 protected:
-    Model *chassis, *cannon;
+    //Model *chassis, *cannon;
     float angleCannon;
     float angleCorrection;
     

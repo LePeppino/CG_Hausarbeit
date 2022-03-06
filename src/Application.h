@@ -19,6 +19,8 @@
 #include "basemodel.h"
 #include "terrain.h"
 #include "airplane.h"
+#include "Tank.h"
+#include "Ring.h"
 
 class Application
 {
@@ -32,6 +34,9 @@ public:
 	void createScene();
 
 	void keyPress(float&, float&, float dtime);
+	void keyPress(float&, float &);
+	float toRadian(float degrees);
+	float randomFloat(float a, float b);
 
 protected:
     Camera Cam;
@@ -45,6 +50,12 @@ protected:
 	float lr = 0;
 	float moveVel = 0;
 	float turnVel = 0;
+	Vector calc3DRay(float x, float y, Vector& Pos);
+	Tank* pTank;
+	Model* pTankTop;
+	Model* pTankBot;
+	Ring* rings[50];
+	float fb, lr;
 	double mx, my;
     float oldXPosition,oldYPosition;
 };

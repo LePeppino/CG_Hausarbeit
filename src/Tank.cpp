@@ -83,6 +83,8 @@ void Tank::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 			chassisMatrix = chassisUrsprung * chassisPitch * chassisRoll * chassisTurn * chassisMov;
 			this->chassis->transform(chassisMatrix);
 
+			boundingBox = this->chassis->boundingBox();
+
 			cannonMatrix = chassisUrsprung;
 			this->cannon->transform(cannonMatrix);
 

@@ -101,6 +101,12 @@
     <ClCompile Include="..\src\Airplane.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Entity.cpp">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Ring.cpp">
+      <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Application.h">
@@ -177,6 +183,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Airplane.h">
       <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Entity.h">
+      <Filter>Quelldateien\utils\yourclasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Ring.h">
+      <Filter>Quelldateien\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

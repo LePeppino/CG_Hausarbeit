@@ -138,7 +138,7 @@ void Application::keyPress(float &fb, float &lr, float dtime)
 		}
 	}
 }
-
+*/
 void Application::draw()
 {
     // 1. clear screen
@@ -161,6 +161,14 @@ void Application::end()
         delete *it;
     
     Models.clear();
+}
+
+// Quelle: https://stackoverflow.com/questions/5289613/generate-random-float-between-two-floats
+float Application::randomFloat(float a, float b) {
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = b - a;
+	float r = random * diff;
+	return  a + r;
 }
 
 void Application::createScene() 
@@ -217,4 +225,42 @@ void Application::createScene()
 	pModel->transform(waterMatrix);
 	Models.push_back(pModel);
 
+
+	PhongShader* pPhongShader;
+	pTank = new Tank();
+	pPhongShader = new PhongShader();
+	pTank->shader(pPhongShader, true);
+	pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
+	Models.push_back(pTank);
+
+	for (int i = 0; i < 500; i++) {
+		pModel = new Model(ASSET_DIRECTORY "Lowpoly_tree_sample.obj");
+		pModel->shader(new PhongShader, true);
+		
+		Matrix pos, scale, tree;
+		pos = pModel->transform();
+		pos.translation();
+		float x, z, y;
+		x = randomFloat(-300.0, 300.0);
+		z = randomFloat(-300.0, 300.0);
+		float convX, convZ;
+		convX = (((x / 24.6) + 24.6 / 2.0) / 0.03075);
+		convZ = (((z / 24.6) + 24.6 / 2.0) / 0.03075);
+		y = pTerrain->heights[static_cast<int>(convX)][static_cast<int>(convZ)] * 20;
+		if (y > 5) {
+			scale.scale(0.2);
+			pos.translation(x, y, z);
+			tree = pos * scale;
+			pModel->transform(tree);
+			Models.push_back(pModel);
+		}
+	}
+
+	for (int i = 0; i < 50; i++) {
+		rings[i] = new Ring();
+		pPhongShader = new PhongShader();
+		rings[i]->shader(pPhongShader, true);
+		rings[i]->loadModels(ASSET_DIRECTORY "ring.obj", pTerrain);
+		Models.push_back(rings[i]);
+	}
 }

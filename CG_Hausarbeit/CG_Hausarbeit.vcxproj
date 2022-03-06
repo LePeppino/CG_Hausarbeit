@@ -27,6 +27,7 @@
     <ClCompile Include="..\src\Camera.cpp" />
     <ClCompile Include="..\src\color.cpp" />
     <ClCompile Include="..\src\ConstantShader.cpp" />
+    <ClCompile Include="..\src\Entity.cpp" />
     <ClCompile Include="..\src\IndexBuffer.cpp" />
     <ClCompile Include="..\src\LineBoxModel.cpp" />
     <ClCompile Include="..\src\LinePlaneModel.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="..\src\Model.cpp" />
     <ClCompile Include="..\src\PhongShader.cpp" />
     <ClCompile Include="..\src\rgbimage.cpp" />
+    <ClCompile Include="..\src\Ring.cpp" />
     <ClCompile Include="..\src\Tank.cpp" />
     <ClCompile Include="..\src\Terrain.cpp" />
     <ClCompile Include="..\src\TerrainShader.cpp" />
@@ -55,6 +57,7 @@
     <ClInclude Include="..\src\Camera.h" />
     <ClInclude Include="..\src\color.h" />
     <ClInclude Include="..\src\ConstantShader.h" />
+    <ClInclude Include="..\src\Entity.h" />
     <ClInclude Include="..\src\IndexBuffer.h" />
     <ClInclude Include="..\src\LineBoxModel.h" />
     <ClInclude Include="..\src\LinePlaneModel.h" />
@@ -62,6 +65,7 @@
     <ClInclude Include="..\src\Model.h" />
     <ClInclude Include="..\src\PhongShader.h" />
     <ClInclude Include="..\src\rgbimage.h" />
+    <ClInclude Include="..\src\Ring.h" />
     <ClInclude Include="..\src\Tank.h" />
     <ClInclude Include="..\src\Terrain.h" />
     <ClInclude Include="..\src\TerrainShader.h" />
