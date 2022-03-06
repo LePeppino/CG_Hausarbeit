@@ -10,9 +10,10 @@
 class Terrain : public BaseModel
 {
 public:
-    Terrain(const char* HeightMap=NULL, const char* DetailMap1=NULL, const char* DetailMap2=NULL, const char* DetailMap3 = NULL ,const char* DetailMap4 = NULL ,const char* MixTex=NULL);
+    Terrain(const char* HeightMap=NULL, const char* DetailMap1=NULL, const char* DetailMap2=NULL, const char* MixTex=NULL);
     virtual ~Terrain();
-    bool load( const char* HeightMap, const char* DetailMap1, const char* DetailMap2, const char* DetailMap3, const char* DetailMap4, const char* MixTex);
+    bool load( const char* HeightMap, const char* DetailMap1, const char* DetailMap2, const char* MixTex);
+	bool loadNormalTextures(const char* NormalMap1, const char* NormalMap2);
 
     virtual void shader( BaseShader* shader, bool deleteOnDestruction );
     virtual void draw(const BaseCamera& Cam);
@@ -35,7 +36,8 @@ protected:
     void applyShaderParameter();
     VertexBuffer VB;
     IndexBuffer IB;
-    Texture DetailTex[4];
+    Texture DetailTex[2];
+	Texture NormalTex[2];
     Texture MixTex;
     Texture HeightTex;
     Vector Size;

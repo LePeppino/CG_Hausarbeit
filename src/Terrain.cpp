@@ -7,12 +7,12 @@
 #define TERRAIN_DIM 24.6
 #define TERRAIN_HEIGHT 20
 
-Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2,  const char* DetailMap3,  const char* DetailMap4, const char* MixTex) 
+Terrain::Terrain(const char* HeightMap, const char* DetailMap1, const char* DetailMap2, const char* MixTex) 
 	: Size(TERRAIN_DIM, TERRAIN_HEIGHT, TERRAIN_DIM)
 {
     if(HeightMap && DetailMap1 && DetailMap2)
     {
-        bool loaded = load( HeightMap, DetailMap1, DetailMap2, DetailMap3, DetailMap4, MixTex);
+        bool loaded = load( HeightMap, DetailMap1, DetailMap2, MixTex);
         if(!loaded)
             throw std::exception();
     }
@@ -28,17 +28,20 @@ Vector Terrain::normal(const Vector& a , const Vector& b , const Vector& c ) {
     return triangleNormal.normalize();
 }
 
-bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* DetailMap2, const char* DetailMap3, const char* DetailMap4, const char* MixTex)
+bool Terrain::loadNormalTextures(const char* NormalMap1, const char* NormalMap2) {
+	if (!NormalTex[0].load(NormalMap1))
+		return false;
+	if (!NormalTex[1].load(NormalMap2))
+		return false;
+}
+
+bool Terrain::load( const char* HeightMap, const char* DetailMap1, const char* DetailMap2, const char* MixTex)
 {
     if( !HeightTex.load(HeightMap) )
         return false;
     if( !DetailTex[0].load(DetailMap1) )
         return false;
     if( !DetailTex[1].load(DetailMap2) )
-        return false;
-    if (!DetailTex[2].load(DetailMap3))
-        return false;
-    if (!DetailTex[3].load(DetailMap4))
         return false;
     if (!this->MixTex.load(MixTex))
         return false;
@@ -168,14 +171,18 @@ void Terrain::draw(const BaseCamera& Cam)
 void Terrain::applyShaderParameter()
 {
     TerrainShader* Shader = dynamic_cast<TerrainShader*>(BaseModel::shader());
-    if(!Shader)
-        return;
+	if (!Shader) {
+		return;
+	}
     
     Shader->mixTex(&MixTex);
-    for(int i=0; i<4; i++)
-        Shader->detailTex(i,&DetailTex[i]);
+
+	for (int i = 0; i < 2; i++) {
+		Shader->detailTex(i, &DetailTex[i]);
+		Shader->normalTex(i, &NormalTex[i]);
+	}
+        
     Shader->scaling(Size);
-    
     
     // TODO: add additional parameters if needed..
 }
