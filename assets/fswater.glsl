@@ -13,7 +13,7 @@ uniform sampler2D DiffuseTexture;
 float sat(in float a)
 {
     float dmin = 0;
-    float dmax = 200;
+    float dmax = 150;
     
     return clamp(pow((length(EyePos-Position)-dmin)/dmax-dmin,a), 0.0, 1.0);
 }
@@ -26,10 +26,10 @@ void main()
 
 	//Nebel
     float s = sat(1);
-    vec3 colorFogCalc = vec3(0.30, 0.30, 0.40); //Farbe für sunset skybox
+    vec3 colorFogCalc = vec3(0.55, 0.40, 0.40); //Farbe für sunset skybox
     vec4 colorFog = vec4(colorFogCalc.rgb, 1);
     vec4 newColorFog = (1-s)*color+(s*colorFog);
 
-	FragColor = vec4(DiffTex.rgb, 0.6) * newColorFog;
+	FragColor = vec4(DiffTex.rgb, 0.5) * newColorFog;
 
 }

@@ -7,6 +7,8 @@
 #include <glfw/glfw3.h>
 #endif
 #include <stdio.h>
+#include <chrono>
+#include <thread>
 #include "Application.h"
 #include "freeimage.h"
 #include "imgui.h"
@@ -101,6 +103,13 @@ int main () {
 				ImGui::PushFont(fontSmall);
 				ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 				ImGui::End();
+			}
+
+			//check game end
+			if (App.score == 50) {
+				std::cout << "Congratulations and thanks for playing!" << std::endl;
+				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+				break;
 			}
 
 			ImGui::Render();

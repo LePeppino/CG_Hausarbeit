@@ -78,8 +78,8 @@ PhongShader::PhongShader(bool LoadStaticShaderCode) :
  SpecularColor(0.5f,0.5f,0.5f),
  AmbientColor(0.2f,0.2f,0.2f),
  SpecularExp(20.0f),
- LightPos(20.0f,20.0f,20.0f),
- LightColor(1,1,1),
+ LightPos(0.0f,150.0f,400.0f),
+ LightColor(1,0.95,0.6),
  DiffuseTexture(Texture::defaultTex()),
  UpdateState(0xFFFFFFFF)
 {

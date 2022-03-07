@@ -1,6 +1,3 @@
-//
-// Created by nktrc on 10/18/2020.
-//
 
 #ifndef PRAKTIKUM01_VECTOR_H
 #define PRAKTIKUM01_VECTOR_H
