@@ -33,8 +33,10 @@ public:
 	void createScene();
 
 	void keyPress(float &fb, float &lr, float dtime);
-	float toRadian(float degrees);
 	float randomFloat(float a, float b);
+
+	int score = 0;
+	int crashes = 0;
 
 protected:
     Camera Cam;

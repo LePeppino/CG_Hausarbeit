@@ -58,8 +58,8 @@ int main () {
 	ImFont* fontSmall = io.Fonts->AddFontFromFileTTF(ASSET_DIRECTORY "fonts/DroidSans.ttf", 16);
 	ImFont* fontMedium = io.Fonts->AddFontFromFileTTF(ASSET_DIRECTORY "fonts/DroidSans.ttf", 20);
 	ImFont* fontLarge = io.Fonts->AddFontFromFileTTF(ASSET_DIRECTORY "fonts/DroidSans.ttf", 24);
-	ImGui::StyleColorsDark();
 	// Setup style
+	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.Alpha = 0.8f;
 	style.DisplaySafeAreaPadding = ImVec2(4.0f, 4.0f);
@@ -93,13 +93,13 @@ int main () {
 
 			//UI Overlay
 			{
-				static int score = 0;
 				ImGui::PushFont(fontMedium);
 				ImGui::Begin("Fly through the rings but don't crash!", NULL);
 				ImGui::PushFont(fontLarge);
-				ImGui::Text("SCORE: %d", score);
+				ImGui::Text("SCORE: %d / 50", App.score);
+				ImGui::Text("CRASHES: %d", App.crashes);
 				ImGui::PushFont(fontSmall);
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 				ImGui::End();
 			}
 

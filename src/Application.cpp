@@ -57,13 +57,14 @@ void Application::update(float dtime)
 {
 	keyPress(fb, lr, dtime);
 	pAirplane->steer(fb, lr);
-	pAirplane->update(dtime, Vector(0,0,0), pTerrain, Cam);
+	this->crashes += pAirplane->update(dtime, Vector(0,0,0), pTerrain, Cam);
 
 	for (int i = 0; i < 50; i++) {
 		if (rings[i]->calcCollision(pAirplane) && !(rings[i]->getActivated())) {
 			rings[i]->activate();
 			std::cout << "HIT" << std::endl;
 			this->Models.remove(rings[i]);
+			this->score++;
 		}
 	}
 }
