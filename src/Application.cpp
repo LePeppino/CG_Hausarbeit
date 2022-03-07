@@ -63,6 +63,7 @@ void Application::update(float dtime)
 		if (rings[i]->calcCollision(pAirplane) && !(rings[i]->getActivated())) {
 			rings[i]->activate();
 			std::cout << "HIT" << std::endl;
+			this->Models.remove(rings[i]);
 		}
 	}
 }
@@ -183,6 +184,7 @@ void Application::createScene()
 	BaseModel* pModel;
 
 	//Map generieren aus Heightmap
+	//Heightmap Generator: https://heightmap.skydark.pl/
 	const char* file = ASSET_DIRECTORY "heightmap_iceland.png";
 	Texture t;
 	t.load(file);

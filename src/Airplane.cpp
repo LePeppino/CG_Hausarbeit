@@ -58,7 +58,7 @@ void Airplane::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 	try {
 
 		// Während Spieler über Terrain fliegt
-		if (planePos.Y > heightForCords * TERRAIN_HEIGHT)
+		if (planePos.Y > heightForCords * TERRAIN_HEIGHT && tryoutX < 750.0 && tryoutZ < 750.0)
 		{
 			//https://www.youtube.com/watch?v=RpNPW89Y-3A
 
@@ -84,6 +84,7 @@ void Airplane::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 		{
 			//Kollision --> TODO: Feedback & neu starten
 			std::cout << "Kollision mit Terrain!" << std::endl;
+
 			return;
 		}
 	}
