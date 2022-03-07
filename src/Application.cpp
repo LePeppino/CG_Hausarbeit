@@ -38,7 +38,7 @@
 Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
 {
 	int windowWidth, windowHeight;
-	glfwGetWindowSize(pWindow, &windowWidth, &windowHeight); //für PostFX
+	glfwGetWindowSize(pWindow, &windowWidth, &windowHeight);
 	createScene();
 	//TODO PostFX
 }

@@ -9,6 +9,15 @@
 #include <stdio.h>
 #include "Application.h"
 #include "freeimage.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
+#ifdef WIN32
+#define ASSET_DIRECTORY "../assets/"
+#else
+#define ASSET_DIRECTORY "assets/"
+#endif
 
 void PrintOpenGLVersion();
 
@@ -27,7 +36,7 @@ int main () {
     glfwWindowHint (GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #endif
-    
+	const char* glsl_version = "#version 400";
     //window Size
     const int WindowWidth = 1280;
     const int WindowHeight = 720;
@@ -41,6 +50,21 @@ int main () {
     }
     glfwMakeContextCurrent (window);
 
+	//IMGUI
+	ImGui::CreateContext();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init(glsl_version);
+	ImGuiIO& io = ImGui::GetIO();
+	ImFont* fontSmall = io.Fonts->AddFontFromFileTTF(ASSET_DIRECTORY "fonts/DroidSans.ttf", 16);
+	ImFont* fontMedium = io.Fonts->AddFontFromFileTTF(ASSET_DIRECTORY "fonts/DroidSans.ttf", 20);
+	ImFont* fontLarge = io.Fonts->AddFontFromFileTTF(ASSET_DIRECTORY "fonts/DroidSans.ttf", 24);
+	ImGui::StyleColorsDark();
+	// Setup style
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.Alpha = 0.8f;
+	style.DisplaySafeAreaPadding = ImVec2(4.0f, 4.0f);
+	
+
     //using OpenGL Extension Weangler Library on windows 
 #if WIN32
 	glewExperimental = GL_TRUE;
@@ -49,24 +73,45 @@ int main () {
 
     PrintOpenGLVersion();
 
-    
     {
         double lastTime=0;
         Application App(window);
         App.start();
+
         while (!glfwWindowShouldClose (window)) {
             double now = glfwGetTime();
             double delta = now - lastTime;
             lastTime = now;
+
             // once per frame
-            glfwPollEvents();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui::NewFrame();
+			glfwPollEvents();
             App.update((float)delta);
             App.draw();
+
+			//UI Overlay
+			{
+				static int score = 0;
+				ImGui::PushFont(fontMedium);
+				ImGui::Begin("Fly through the rings but don't crash!", NULL);
+				ImGui::PushFont(fontLarge);
+				ImGui::Text("SCORE: %d", score);
+				ImGui::PushFont(fontSmall);
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::End();
+			}
+
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
             glfwSwapBuffers (window);
         }
         App.end();
     }
-    
+
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
     glfwTerminate();
     return 0;
 }
