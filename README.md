@@ -6,9 +6,12 @@ Steuerung: Invertierte Flugzeugsteuerung 	W = nach unten neigen
 						A = nach links neigen
 						D = nach rechts neigen
 
-Spielziel: Der Spieler soll, durch geschicktes lenken des Flugzeugs, alle 50 Ringe, welche verstreut auf der Landschaft plaziert wurden, durchfliegen (hierbei reicht es wenn der Spieler einen Ring berührt). 
-	Wird ein Ring durchflogen, wird der Counter auf der rechten oberen Seite des Bildes inkrementiert. Berührt der Spieler die Landschaft, wird dieser wieder auf die Startposition zurück gesetzt und der "Crash"-Counter wird erhöht.
-	Das Spiel endet automatisch wenn alle 50 Ringe auf der Landschaft durchflogen worden sind.
+Spielziel: 
+
+	   Der Spieler soll durch geschicktes Lenken des Flugzeugs, alle 50 Ringe durchfliegen, welche verstreut auf der Landschaft plaziert wurden (hierbei reicht es wenn der Spieler einen Ring berührt). 
+	   Wird ein Ring durchflogen, wird der "Score"-Counter auf der rechten oberen Seite des Bildes inkrementiert.
+	   Berührt der Spieler die Landschaft, wird dieser wieder auf die Startposition zurück gesetzt und der "Crash"-Counter wird erhöht.
+	   Das Spiel endet automatisch, wenn alle 50 Ringe auf der Landschaft durchflogen worden sind.
 
 
 Quellen:
