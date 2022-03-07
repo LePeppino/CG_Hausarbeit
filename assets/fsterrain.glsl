@@ -24,7 +24,7 @@ out vec4 FragColor;
 float sat(in float a)
 {
     float dmin = 0;
-    float dmax = 250;
+    float dmax = 200;
     
     return clamp(pow((length(EyePos-Position)-dmin)/dmax-dmin,a), 0.0, 1.0);
 }
@@ -59,7 +59,7 @@ void main()
 
     //Nebel
     float s = sat(1);
-    vec3 colorFogCalc = vec3(0.30, 0.30, 0.40); //Farbe für sunset skybox
+    vec3 colorFogCalc = vec3(0.45, 0.45, 0.40); //Farbe für sunset skybox
     vec4 colorFog = vec4(colorFogCalc.rgb, 1);
     vec4 newColorFog = (1-s)*color+(s*colorFog);    
 

@@ -21,6 +21,9 @@
     <Filter Include="Quelldateien\utils\yourclasses">
       <UniqueIdentifier>{cda48e18-3679-496b-9ac2-eefa2a99c372}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\utils\imgui">
+      <UniqueIdentifier>{c4987a67-1963-4df7-8096-f50ee10c1b3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Application.cpp">
@@ -95,9 +98,6 @@
     <ClCompile Include="..\src\WaterShader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Tank.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Airplane.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -106,6 +106,27 @@
     </ClCompile>
     <ClCompile Include="..\src\Ring.cpp">
       <Filter>Quelldateien\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\imgui.cpp">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\imgui_demo.cpp">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\imgui_draw.cpp">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\imgui_tables.cpp">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\imgui_widgets.cpp">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\imgui_impl_glfw.cpp">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\imgui_impl_opengl3.cpp">
+      <Filter>Quelldateien\utils\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,9 +199,6 @@
     <ClInclude Include="..\src\WaterShader.h">
       <Filter>Quelldateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Tank.h">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Airplane.h">
       <Filter>Quelldateien</Filter>
     </ClInclude>
@@ -189,6 +207,33 @@
     </ClInclude>
     <ClInclude Include="..\src\Ring.h">
       <Filter>Quelldateien\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imconfig.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imgui.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imgui_internal.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imstb_rectpack.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imstb_textedit.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imstb_truetype.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imgui_impl_glfw.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imgui_impl_opengl3.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\imgui_impl_opengl3_loader.h">
+      <Filter>Quelldateien\utils\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

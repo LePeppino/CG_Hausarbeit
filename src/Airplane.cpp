@@ -41,7 +41,7 @@ void Airplane::steer( float ForwardBackward, float LeftRight)
     fb.Y = LeftRight;
 }
 
-void Airplane::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
+int Airplane::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 {
 	Matrix chassisMatrix, chassisMov, chassisTurn, chassisPitch, chassisRoll, chassisUrsprung;
 
@@ -84,13 +84,16 @@ void Airplane::update(float dtime, Vector size, Terrain *terrain, Camera& cam)
 		{
 			//Kollision --> TODO: Feedback & neu starten
 			std::cout << "Kollision mit Terrain!" << std::endl;
-
-			return;
+			Matrix chassisReset;
+			chassisReset.translation(0, 35, 0);
+			this->chassis->transform(chassisReset);
+			return 1;
 		}
 	}
 	catch (...) {
 
 	}
+	return 0;
 }
 
 void Airplane::draw(const BaseCamera& Cam)

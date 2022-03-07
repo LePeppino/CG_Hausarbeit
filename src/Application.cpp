@@ -38,7 +38,7 @@
 Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
 {
 	int windowWidth, windowHeight;
-	glfwGetWindowSize(pWindow, &windowWidth, &windowHeight); //für PostFX
+	glfwGetWindowSize(pWindow, &windowWidth, &windowHeight);
 	createScene();
 	//TODO PostFX
 }
@@ -57,13 +57,14 @@ void Application::update(float dtime)
 {
 	keyPress(fb, lr, dtime);
 	pAirplane->steer(fb, lr);
-	pAirplane->update(dtime, Vector(0,0,0), pTerrain, Cam);
+	this->crashes += pAirplane->update(dtime, Vector(0,0,0), pTerrain, Cam);
 
 	for (int i = 0; i < 50; i++) {
 		if (rings[i]->calcCollision(pAirplane) && !(rings[i]->getActivated())) {
 			rings[i]->activate();
 			std::cout << "HIT" << std::endl;
 			this->Models.remove(rings[i]);
+			this->score++;
 		}
 	}
 }
@@ -198,11 +199,12 @@ void Application::createScene()
 	//Skybox generieren und ausrichten
 	pModel = new Model(ASSET_DIRECTORY "skybox.obj", true);
 	pModel->shader(new PhongShader(), true);
-	Matrix skyboxMatrix, skyboxScale, skyboxTrans;
+	Matrix skyboxMatrix, skyboxScale, skyboxRot, skyboxTrans;
 	pModel->transform();
 	skyboxScale.scale(3);
-	skyboxTrans.translation(0, 5, 0);
-	skyboxMatrix = skyboxScale * skyboxTrans;
+	//skyboxRot.rotationY(1.5708); //90 Grad Drehung
+	//skyboxTrans.translation(0, 5, 0);
+	skyboxMatrix = skyboxScale;
 	pModel->transform(skyboxMatrix);
 	Models.push_back(pModel);
 
@@ -222,17 +224,8 @@ void Application::createScene()
 	pAirplane->loadModels(ASSET_DIRECTORY "airplane_v2/11804_Airplane_v2_l2.obj");
 	Models.push_back(pAirplane);
 
-	//Meeresspiegel als PlaneModel
-	//Nach dem Terrain und Objekten rendern, um Transparenz sichtbar zu machen!
-	pModel = new TrianglePlaneModel(1001, 1001, 100, 100, true);
-	WaterShader* pWaterShader = new WaterShader(ASSET_DIRECTORY);
-	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
-	pModel->shader(pWaterShader, true);
-	Matrix waterMatrix;
-	waterMatrix.translation(0, 5, 0);
-	pModel->transform(waterMatrix);
-	Models.push_back(pModel);
-
+	//Bäume generieren
+	//Quelle: https://www.turbosquid.com/3d-models/sample-trees-c4d-free/1008420
 	for (int i = 0; i < 500; i++) {
 		pModel = new Model(ASSET_DIRECTORY "Lowpoly_tree_sample.obj");
 		pModel->shader(new PhongShader, true);
@@ -256,10 +249,22 @@ void Application::createScene()
 		}
 	}
 
+	//Ringe generieren
 	for (int i = 0; i < 50; i++) {
 		rings[i] = new Ring();
 		rings[i]->shader(new PhongShader(), true);
 		rings[i]->loadModels(ASSET_DIRECTORY "ring.obj", pTerrain);
 		Models.push_back(rings[i]);
 	}
+
+	//Meeresspiegel als PlaneModel
+	//Nach dem Terrain und Objekten rendern, um Transparenz sichtbar zu machen!
+	pModel = new TrianglePlaneModel(1001, 1001, 100, 100, true);
+	WaterShader* pWaterShader = new WaterShader(ASSET_DIRECTORY);
+	pWaterShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "water2.jpg"));
+	pModel->shader(pWaterShader, true);
+	Matrix waterMatrix;
+	waterMatrix.translation(0, 5, 0);
+	pModel->transform(waterMatrix);
+	Models.push_back(pModel);
 }
