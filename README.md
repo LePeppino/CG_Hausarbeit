@@ -1,5 +1,5 @@
 # CG_Hausarbeit
-Projektteilnehmer: Giuseppe Buccellato Matr. 889000, Maximilian Krebs 871468
+Projektteilnehmer: Giuseppe Buccellato Matr. 889000, Maximilian Krebs Matr. 871468
 
 Steuerung: Invertierte Flugzeugsteuerung 	W = nach unten neigen
 						S = nach oben neigen
