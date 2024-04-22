@@ -13,6 +13,8 @@ Spielziel:
 	   Berührt der Spieler die Landschaft, wird dieser wieder auf die Startposition zurück gesetzt und der "Crash"-Counter wird erhöht.
 	   Das Spiel endet automatisch, wenn alle 50 Ringe auf der Landschaft durchflogen worden sind.
 
+![1](https://github.com/LePeppino/CG_Hausarbeit/assets/62338254/820b7b8a-47b8-41c5-be24-b22b8a586582)
+
 
 Quellen:
 	-https://stackoverflow.com/questions/5289613/generate-random-float-between-two-floats
